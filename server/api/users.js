@@ -15,3 +15,14 @@ router.get('/', async (req, res, next) => {
     next(err)
   }
 })
+let userCart = {
+  items: [{id: 50, name: 'apple', price: 1, quantity: 4, image: 'imageUrl'}]
+}
+
+router.get('/cart', (req, res, next) => {
+  try {
+    res.json(userCart.items)
+  } catch (err) {
+    next(err)
+  }
+})
