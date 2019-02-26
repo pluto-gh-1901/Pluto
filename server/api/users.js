@@ -16,7 +16,23 @@ router.get('/', async (req, res, next) => {
   }
 })
 let userCart = {
-  items: [{id: 50, name: 'apple', price: 1, quantity: 4, image: 'imageUrl'}]
+  items: [
+    {
+      id: 50,
+      name: 'apple',
+      price: 1,
+      quantity: 3,
+      image:
+        'https://media.gettyimages.com/photos/red-apple-picture-id186843005?s=612x612'
+    },
+    {
+      id: 51,
+      name: 'orange',
+      price: 2,
+      quantity: 2,
+      image: 'https://www.marlerblog.com/files/2013/03/orange.jpg'
+    }
+  ]
 }
 
 router.get('/cart', (req, res, next) => {
