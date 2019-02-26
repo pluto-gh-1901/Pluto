@@ -10,7 +10,7 @@ const Product = db.define('product', {
   description: {
     type: Sequelize.TEXT
   },
-  quantity: {
+  inventory: {
     type: Sequelize.INTEGER,
     defaultValue: 0,
     validate: {
@@ -21,6 +21,9 @@ const Product = db.define('product', {
     type: Sequelize.TEXT,
     defaultValue:
       'http://automation.crouzet.com/wp-content/themes/innovistasensors_wp-theme_crouzet-brands/assets/algolia/img/no-image-available.jpg'
+  },
+  price: {
+    type: Sequelize.DECIMAL
   },
   tags: {
     type: Sequelize.ARRAY(Sequelize.STRING)
