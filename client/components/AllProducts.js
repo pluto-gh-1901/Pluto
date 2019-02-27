@@ -24,7 +24,7 @@ class AllProducts extends Component {
             <div key={product.id}>
               <Link to={`/products/${product.id}`}>
                 <h3>{product.name}</h3>
-                <img src={product.imageUrl} />
+                <img className="productImg" src={product.imageUrl} />
               </Link>
             </div>
           ))}
