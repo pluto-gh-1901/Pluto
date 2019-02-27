@@ -3,19 +3,19 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import axios from 'axios'
+import {requestCart} from '../store/cart'
 
-export class Cart extends Component {
+class Cart extends Component {
   constructor() {
     super()
-    this.state = {
-      cartItems: []
-    }
   }
-  async componentDidMount() {
-    const cartItems = await axios.get('/api/users/cart')
-    this.setState({cartItems: cartItems.data})
+  componentDidMount() {
+    // this.props.requestCart(this.props.id)
+    console.log('PROPS::', this.props)
+    // const cartItems = await axios.get('/api/users/cart')
+    // this.setState({cartItems: cartItems.data})
   }
-  handleChange = event => {}
+  // handleChange = event => {}
   render() {
     let items,
       total = 0
@@ -52,3 +52,18 @@ export class Cart extends Component {
     )
   }
 }
+
+const mapDispatch = dispatch => {
+  return {
+    requestCart: () => dispatch(requestCart())
+  }
+}
+
+const mapState = state => {
+  return {
+    id: state.user.id,
+    cart: state.cart
+  }
+}
+
+export default connect(mapState, mapDispatch)(Cart)
