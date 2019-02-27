@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 
-import {getOneProduct} from '../actions/student.actions'
+import {requestProduct} from '../store/product'
 
 class SingleProduct extends Component {
   constructor(props) {
@@ -14,9 +14,9 @@ class SingleProduct extends Component {
   }
 
   componentDidMount() {
-    this.setState({
-      quantity: this.props.product.quantity
-    })
+    console.log('id is ', this.props.match.params.productId)
+    const productId = this.props.match.params.productId
+    this.props.requestProduct(productId)
   }
 
   handleChange(evt) {
@@ -58,11 +58,13 @@ class SingleProduct extends Component {
 }
 
 const mapStateToProps = state => ({
-  product: state.product
+  product: state.product.selectedProduct
 })
 
 const mapDispatchToProps = dispatch => ({
-  getOneProduct: productId => dispatch(getOneProduct(productId))
+  requestProduct: productId => dispatch(requestProduct(productId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleProduct)
+
+// export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SingleProduct))
