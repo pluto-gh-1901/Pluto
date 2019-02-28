@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import '../../public/style-splash.css'
+import '../../public/styleSplash.css'
 
 /**
  * COMPONENT
