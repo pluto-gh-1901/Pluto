@@ -11,6 +11,7 @@ class SingleProduct extends Component {
       quantity: ''
     }
     this.handleChange = this.handleChange.bind(this)
+    this.addToCart = this.addToCart.bind(this)
   }
 
   componentDidMount() {
@@ -27,31 +28,36 @@ class SingleProduct extends Component {
   //   evt.preventDefault()
   // }
 
+  addToCart(evt) {
+    evt.preventDefault()
+    console.log('QUANTITY::', evt)
+  }
+
   render() {
     const {product} = this.props
 
     return (
       <div>
         <img src={product.imageUrl} />
-        <div>
-          <h1>Product: {product.name}</h1>
-          <p>Description: {product.description}</p>
-          <label htmlFor="quantity">
-            <input
-              type="text"
-              name="quantity"
-              value={this.state.quantity}
-              onChange={this.handleChange}
-            />
-          </label>
-          <p>Quantity:</p>
-        </div>
-        <Link to="/products">
-          <button>Back</button>
-        </Link>
-        <Link to="/cart">
-          <button>Buy</button>
-        </Link>
+        <form onSubmit={this.addToCart}>
+          <div>
+            <h1>Product: {product.name}</h1>
+            <p>Description: {product.description}</p>
+            <label htmlFor="quantity">
+              <input
+                type="text"
+                name="quantity"
+                value={this.state.quantity}
+                onChange={this.handleChange}
+              />
+            </label>
+            <p>Quantity:</p>
+          </div>
+          <Link to="/products">
+            <button>Back</button>
+          </Link>
+          <button type="submit">Buy</button>
+        </form>
       </div>
     )
   }
