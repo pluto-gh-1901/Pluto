@@ -10,31 +10,30 @@ class Cart extends Component {
     super()
   }
   componentDidMount() {
-    // this.props.requestCart(this.props.id)
-    console.log('PROPS::', this.props)
-    // const cartItems = await axios.get('/api/users/cart')
-    // this.setState({cartItems: cartItems.data})
+    this.props.requestCart(this.props.id)
   }
   // handleChange = event => {}
   render() {
+    let cart = this.props.cart || {}
     let items,
       total = 0
-    if (this.state.cartItems) {
-      items = this.state.cartItems.map((product, index) => {
-        total += product.price * product.quantity
+    if (cart.orderItems) {
+      items = cart.orderItems.map((product, index) => {
+        total += product.product.price * product.product.quantity
         return (
-          <div key={product.id}>
-            <h2>{product.name}</h2>
-            <img src={product.image} width="128" height="128" />
+          <div key={product.product.id}>
+            <h2>{product.product.name}</h2>
+            <img src={product.product.imageUrl} width="128" height="128" />
             <p>
               Quantity:{' '}
               <input
                 type="number"
-                value={this.state.cartItems[index].quantity}
+                value={cart.orderItems[index].quantity}
                 onChange={this.handleChange}
               />
             </p>
-            <p>Price: {product.price}</p>
+            <p>Price: {product.product.price}</p>
+            {/* Functionality still needed for Remove button */}
             <button>Remove</button>
           </div>
         )
@@ -55,7 +54,7 @@ class Cart extends Component {
 
 const mapDispatch = dispatch => {
   return {
-    requestCart: () => dispatch(requestCart())
+    requestCart: id => dispatch(requestCart(id))
   }
 }
 

@@ -12,9 +12,10 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.get('/cart', async (req, res, next) => {
+router.post('/cart', async (req, res, next) => {
   try {
     const userId = req.body.userId
+    console.log('USERIDFROM ROUTES:::', userId)
     const cartItems = await Order.findOne({
       where: {userId, status: 'cart'},
       include: [
