@@ -2,7 +2,6 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
-import SingleProduct from './SingleProduct'
 
 /**
  * COMPONENT
@@ -11,26 +10,32 @@ const AuthForm = props => {
   const {name, displayName, handleSubmit, error} = props
 
   return (
-    <div>
-      <form onSubmit={handleSubmit} name={name}>
-        <div>
-          <label htmlFor="email">
-            <small>Email</small>
-          </label>
-          <input name="email" type="text" />
-        </div>
-        <div>
-          <label htmlFor="password">
-            <small>Password</small>
-          </label>
-          <input name="password" type="password" />
-        </div>
-        <div>
-          <button type="submit">{displayName}</button>
-        </div>
-        {error && error.response && <div> {error.response.data} </div>}
-      </form>
-      <a href="/auth/google">{displayName} with Google</a>
+    <div className="welcomeContainer">
+      <div className="subComp">
+        <form onSubmit={handleSubmit} name={name}>
+          <div className="formEl">
+            <label htmlFor="email">
+              <small>Email</small>
+            </label>
+            <input name="email" type="text" />
+          </div>
+          <div className="formEl">
+            <label htmlFor="password">
+              <small>Password</small>
+            </label>
+            <input name="password" type="password" />
+          </div>
+          <div>
+            <button className="loginB" type="submit">
+              {displayName} with email
+            </button>
+          </div>
+          {error && error.response && <div> {error.response.data} </div>}
+        </form>
+        <button type="button" className="loginB" href="/auth/google">
+          {displayName} with Google
+        </button>
+      </div>
     </div>
   )
 }
