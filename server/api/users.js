@@ -12,9 +12,20 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.get('/cart', (req, res, next) => {
+router.post('/cart', async (req, res, next) => {
   try {
-    // res.send('API/USERS:::')
+    const userId = req.body.userId
+    console.log('USERIDFROM ROUTES:::', userId)
+    const cartItems = await Order.findOne({
+      where: {userId, status: 'cart'},
+      include: [
+        {
+          model: OrderItem,
+          include: [{model: Product}]
+        }
+      ]
+    })
+    res.json(cartItems)
   } catch (err) {
     next(err)
   }
