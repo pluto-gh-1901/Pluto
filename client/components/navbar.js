@@ -9,11 +9,16 @@ import '../../public/navbar.css'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
   <div className="container">
-    <h1 className="logo">Pluto</h1>
+    <h1 className="logo">
+      <Link to="/home">Pluto</Link>
+    </h1>
     <nav>
       {isLoggedIn ? (
         <div className="navbar-buttons">
           {/* The navbar will show these links after you log in */}
+          <div className="navbar">
+            <Link to="/products">Products</Link>
+          </div>
           <div className="navbar">
             <Link to="/home">Home</Link>
           </div>
@@ -30,10 +35,10 @@ const Navbar = ({handleClick, isLoggedIn}) => (
         <div className="navbar-buttons">
           {/* The navbar will show these links before you log in */}
           <div className="navbar">
-            <Link to="/login">Login</Link>
+            <Link to="/products">Products</Link>
           </div>
           <div className="navbar">
-            <Link to="/products">Products</Link>
+            <Link to="/login">Login</Link>
           </div>
           <div className="navbar">
             <Link to="/signup">Sign Up</Link>
