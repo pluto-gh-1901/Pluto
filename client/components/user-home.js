@@ -9,8 +9,17 @@ export const UserHome = props => {
   const {email} = props
 
   return (
-    <div>
-      <h3>Welcome, {email}</h3>
+    <div className="welcomeContainer">
+      <div className="subComp">
+        <h3>Welcome, {email}!</h3>
+        <p>
+          Pluto-Vegetables was launched in February 2019 with one goal: bring
+          healthy veggies to the food lovers of New York City. Today,
+          Pluto-Vegetables delivers greens that are as good for the soul as they
+          are for the body. Sourcing from local farms, Pluto-Vegetables is here
+          to keep you feeling good, no matter what.
+        </p>
+      </div>
     </div>
   )
 }
