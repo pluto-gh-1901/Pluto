@@ -3,14 +3,11 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 
 import {requestProduct} from '../store/product'
+import {orderItemInput} from '../store/cart'
 
 class SingleProduct extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      quantity: ''
-    }
-    this.handleChange = this.handleChange.bind(this)
     this.addToCart = this.addToCart.bind(this)
   }
 
@@ -20,18 +17,20 @@ class SingleProduct extends Component {
     this.props.requestProduct(productId)
   }
 
-  handleChange(evt) {
-    this.setState({quantity: evt.target.value})
-  }
-
-  // handleSubmit(evt) {
-  //   evt.preventDefault()
-  // }
-
   addToCart(evt) {
     evt.preventDefault()
-    console.log('QUANTITY::', evt)
+    let orderInfo = {
+      productId: this.props.match.params.productId,
+      quantity: evt.target.quantity.value,
+      price: this.props.product.price,
+      //currently hard coding order id
+      orderId: 1
+    }
+    this.props.orderItemInput(orderInfo)
+    evt.target.quantity.value = ''
   }
+
+  displayPrice = price => price / 100
 
   render() {
     const {product} = this.props
@@ -43,15 +42,14 @@ class SingleProduct extends Component {
           <div>
             <h1>Product: {product.name}</h1>
             <p>Description: {product.description}</p>
-            <label htmlFor="quantity">
-              <input
-                type="text"
-                name="quantity"
-                value={this.state.quantity}
-                onChange={this.handleChange}
-              />
-            </label>
-            <p>Quantity:</p>
+            <p>Price: {this.displayPrice(product.price)}</p>
+            <label htmlFor="quantity">Quantity:</label>
+            <input
+              type="text"
+              name="quantity"
+              // value={this.state.quantity}
+              onChange={this.handleChange}
+            />
           </div>
           <Link to="/products">
             <button>Back</button>
@@ -64,11 +62,13 @@ class SingleProduct extends Component {
 }
 
 const mapStateToProps = state => ({
-  product: state.product.selectedProduct
+  product: state.product.selectedProduct,
+  user: state.user
 })
 
 const mapDispatchToProps = dispatch => ({
-  requestProduct: productId => dispatch(requestProduct(productId))
+  requestProduct: productId => dispatch(requestProduct(productId)),
+  orderItemInput: orderInfo => dispatch(orderItemInput(orderInfo))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleProduct)
