@@ -49,20 +49,3 @@ router.get('/:userId/cart', async (req, res, next) => {
     next(err)
   }
 })
-
-router.put('/:userId/checkout', async (req, res, next) => {
-  try {
-    const id = req.params.userId
-    const user = await User.findById(id)
-    if (!user) res.sendStatus(404)
-    const updated = await user.update({
-      address: req.body.address,
-      email: req.body.email,
-      cardNumber: req.body.cardNumber,
-      legalName: req.body.legalName,
-      shipping: req.body.shipping
-    })
-  } catch (err) {
-    next(err)
-  }
-})

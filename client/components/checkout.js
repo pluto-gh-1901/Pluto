@@ -39,10 +39,10 @@ class Checkout extends Component {
   }
 
   handleSubmit(evt) {
-    evt.preventdefault(evt)
-    
+    evt.preventDefault()
+
     this.props.cart.status = 'processing'
-    // debugger
+    // Debugger
 
     this.props.recieveEmptyCart()
 
