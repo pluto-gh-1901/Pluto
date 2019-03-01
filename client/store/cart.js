@@ -29,3 +29,22 @@ export default function(state = defaultCart, action) {
       return state
   }
 }
+
+// fetch order with state cart (for checkout)
+export const requestOrder = id => async dispatch => {
+  try {
+    const res = await axios.get(`/api/users/${id}/cart`)
+    dispatch(getCart(res.data))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+// clear cart
+export const recieveEmptyCart = () => async dispatch => {
+  try {
+    dispatch(getCart({}))
+  } catch (err) {
+    console.error(err)
+  }
+}

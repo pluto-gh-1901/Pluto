@@ -2,38 +2,90 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import axios from 'axios'
+import {requestOrder, recieveEmptyCart} from '../store/cart'
 
-let totalPrice = 20.1
+const encriptCardNumber = cardNum => {
+  if (cardNum.length < 16) {
+    return cardNum
+  }
+  return (
+    cardNum
+      .toString()
+      .slice(0, 11)
+      .replace(/[0-9]/g, '*') + cardNum.toString().slice(12)
+  )
+}
 
 class Checkout extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      address: ''
+      address: '',
+      email: props.user.email || '',
+      cardNumber: props.user.cardNumber || 0
     }
     this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  componentDidMount() {
+    this.props.requestOrder(this.props.user.id)
   }
 
   handleChange(evt) {
-    this.setState({address: evt.target.value})
+    this.setState({[evt.target.name]: evt.target.value})
+  }
+
+  handleSubmit(evt) {
+    evt.preventdefault(evt)
+
+    // !!dispatch(recieveEmptyCart())
+    // change state order to processing
+    // dispatch empty object: new thunk creator receive {}
+    // go to home page
   }
 
   render() {
-    const {cart} = this.props
+    const {cart, user} = this.props
+    const {email, cardNumber} = this.state
 
     return (
-      <form>
+      <form onSubmit={this.handleSubmit}>
         <h2>{`You will be paying a total of ${cart.total}`}</h2>
-        <h2>Shipping information</h2>
+        <div>Please enter your address</div>
         <label>
-          <textarea onChange={this.handleChange} />
-        </label>>
-        <p>
-          Card Holder: <input type="text" name="card-holder" required />
-        </p>
-        <p>
-          Card Number: <input type="text" name="card-number" required />
-        </p>
+          Shipping information:
+          <textarea onChange={this.handleChange} name="address" />
+        </label>
+        <label>
+          Email address:
+          <input
+            value={email}
+            name="email"
+            type="email"
+            onChange={this.handleChange}
+            required
+          />
+        </label>
+        <label>
+          Card Number:
+          <input
+            value={encriptCardNumber(cardNumber)}
+            name="cardNumber"
+            type="text"
+            onChange={this.handleChange}
+            required
+          />
+        </label>
+        <label>
+          Card Holder:
+          <input
+            type="text"
+            name="card-holder"
+            onChange={this.handleChange}
+            required
+          />
+        </label>
         <button>Submit</button>
       </form>
     )
@@ -41,14 +93,12 @@ class Checkout extends Component {
 }
 
 const mapState = state => ({
-  cart: state.cart
+  cart: state.cart,
+  user: state.user
 })
 
-export default connect(mapState)(Checkout)
+const mapDispatch = dispatch => ({
+  requestOrder: id => dispatch(requestOrder(id))
+})
 
-// <p>
-//   CVV: <input type="text" name="card-number" required max={3} />
-// </p>
-// <p>
-//   Expiration Date <input type="month" name="date" required />
-// </p>
+export default connect(mapState, mapDispatch)(Checkout)
