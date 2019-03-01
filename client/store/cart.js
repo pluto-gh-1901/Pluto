@@ -2,11 +2,20 @@ import axios from 'axios'
 import history from '../history'
 
 const GET_CART = 'GET_CART'
+const SUBMIT_CART = 'SUBMIT_CART'
 
 const getCart = cart => {
   return {
     type: GET_CART,
     cart
+  }
+}
+
+const submitCart = order => {
+  return {
+    type: SUBMIT_CART,
+    // user,
+    order
   }
 }
 

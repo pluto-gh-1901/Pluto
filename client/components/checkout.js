@@ -22,7 +22,9 @@ class Checkout extends Component {
     this.state = {
       address: '',
       email: props.user.email || '',
-      cardNumber: props.user.cardNumber || 0
+      cardNumber: props.user.cardNumber || '',
+      legalName: props.user.legalName || '',
+      shipping: props.user.shipping || ''
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -38,6 +40,11 @@ class Checkout extends Component {
 
   handleSubmit(evt) {
     evt.preventdefault(evt)
+    
+    this.props.cart.status = 'processing'
+    // debugger
+
+    this.props.recieveEmptyCart()
 
     // !!dispatch(recieveEmptyCart())
     // change state order to processing
@@ -47,7 +54,7 @@ class Checkout extends Component {
 
   render() {
     const {cart, user} = this.props
-    const {email, cardNumber} = this.state
+    const {email, cardNumber, legalName, shipping} = this.state
 
     return (
       <form onSubmit={this.handleSubmit}>
@@ -55,7 +62,13 @@ class Checkout extends Component {
         <div>Please enter your address</div>
         <label>
           Shipping information:
-          <textarea onChange={this.handleChange} name="address" />
+          <input
+            value={shipping}
+            name="shipping"
+            type="text"
+            onChange={this.handleChange}
+            required
+          />
         </label>
         <label>
           Email address:
@@ -80,8 +93,9 @@ class Checkout extends Component {
         <label>
           Card Holder:
           <input
+            value={legalName}
+            name="legalName"
             type="text"
-            name="card-holder"
             onChange={this.handleChange}
             required
           />
@@ -98,7 +112,8 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
-  requestOrder: id => dispatch(requestOrder(id))
+  requestOrder: id => dispatch(requestOrder(id)),
+  recieveEmptyCart: () => dispatch(recieveEmptyCart())
 })
 
 export default connect(mapState, mapDispatch)(Checkout)

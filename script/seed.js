@@ -11,12 +11,16 @@ async function seed() {
     User.create({
       email: 'cody@email.com',
       password: '123',
-      cardNumber: '1234567890120984'
+      cardNumber: '1234567890120984',
+      legalName: 'Cody',
+      shipping: 'NY, New York'
     }),
     User.create({
       email: 'murphy@email.com',
       password: '123',
-      cardNumber: '1234567890114759'
+      cardNumber: '1234567890114759',
+      legalName: 'Andy',
+      shipping: 'IL, Chicago'
     })
   ])
 
