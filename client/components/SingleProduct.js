@@ -1,9 +1,11 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
+import axios from 'axios'
 
 import {requestProduct} from '../store/product'
 import {orderItemInput} from '../store/cart'
+import {runInNewContext} from 'vm'
 
 class SingleProduct extends Component {
   constructor(props) {
@@ -17,6 +19,19 @@ class SingleProduct extends Component {
     this.props.requestProduct(productId)
   }
 
+  async orderCheck() {
+    try {
+      const res = await axios.get(`/api/orderItem/${this.props.user.id}`)
+      return res.data
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  //checks for order with status of cart
+  //if fount sets orderId to that Id
+  //else creates new Order with status of cart
+
   addToCart(evt) {
     evt.preventDefault()
     let orderInfo = {
@@ -24,6 +39,7 @@ class SingleProduct extends Component {
       quantity: evt.target.quantity.value,
       price: this.props.product.price,
       //currently hard coding order id
+      // orderId: this.orderCheck()
       orderId: 1
     }
     this.props.orderItemInput(orderInfo)

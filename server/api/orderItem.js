@@ -23,3 +23,14 @@ router.put('/', async (req, res, next) => {
     next(err)
   }
 })
+
+// router.get('/:userId', async (req, res, next) => {
+//   try {
+//     console.log('ORDER INFO ON ROUTE: ', req.body.orderInfo)
+
+//     }
+//     res.json()
+//   } catch (err) {
+//     next(err)
+//   }
+// })
