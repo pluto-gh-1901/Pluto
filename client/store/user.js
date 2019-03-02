@@ -1,5 +1,6 @@
 import axios from 'axios'
 import history from '../history'
+import {requestCart} from '../store/cart'
 
 /**
  * ACTION TYPES
@@ -34,6 +35,7 @@ export const auth = (email, password, method) => async dispatch => {
   let res
   try {
     res = await axios.post(`/auth/${method}`, {email, password})
+    dispatch(requestCart(res.data.id))
   } catch (authError) {
     return dispatch(getUser({error: authError}))
   }

@@ -4,7 +4,6 @@ module.exports = router
 
 router.put('/', async (req, res, next) => {
   try {
-    console.log('ORDER INFO ON ROUTE: ', req.body.orderInfo)
     const price = Number(req.body.orderInfo.price)
     const quantity = Number(req.body.orderInfo.quantity)
     const productId = Number(req.body.orderInfo.productId)
@@ -24,13 +23,13 @@ router.put('/', async (req, res, next) => {
   }
 })
 
-// router.get('/:userId', async (req, res, next) => {
-//   try {
-//     console.log('ORDER INFO ON ROUTE: ', req.body.orderInfo)
-
-//     }
-//     res.json()
-//   } catch (err) {
-//     next(err)
-//   }
-// })
+router.get('/:userId', async (req, res, next) => {
+  try {
+    let currentOrder
+    const userId = req.params.userId
+    currentOrder = await Order.findOne({where: {userId, status: 'cart'}})
+    res.json(currentOrder)
+  } catch (err) {
+    next(err)
+  }
+})

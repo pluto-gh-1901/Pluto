@@ -16,15 +16,18 @@ router.post('/cart', async (req, res, next) => {
   try {
     const userId = req.body.userId
     console.log('USERIDFROM ROUTES:::', userId)
-    const cartItems = await Order.findOne({
-      where: {userId, status: 'cart'},
-      include: [
-        {
-          model: OrderItem,
-          include: [{model: Product}]
-        }
-      ]
+    let cartItems = await Order.findOne({
+      where: {userId, status: 'cart'}
+      // include: [
+      //   {
+      //     model: OrderItem,
+      //     include: [{model: Product}]
+      //   }
+      //
     })
+    if (!cartItems) {
+      cartItems = await Order.create({userId, status: 'cart'})
+    }
     res.json(cartItems)
   } catch (err) {
     next(err)

@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom'
 import axios from 'axios'
 
 import {requestProduct} from '../store/product'
-import {orderItemInput} from '../store/cart'
+import {orderItemInput, requestCart} from '../store/cart'
 import {runInNewContext} from 'vm'
 
 class SingleProduct extends Component {
@@ -14,33 +14,21 @@ class SingleProduct extends Component {
   }
 
   componentDidMount() {
-    console.log('id is ', this.props.match.params.productId)
     const productId = this.props.match.params.productId
     this.props.requestProduct(productId)
+    console.log(this.props.user)
+    this.props.requestCart(this.props.user.id)
   }
-
-  async orderCheck() {
-    try {
-      const res = await axios.get(`/api/orderItem/${this.props.user.id}`)
-      return res.data
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
-  //checks for order with status of cart
-  //if fount sets orderId to that Id
-  //else creates new Order with status of cart
 
   addToCart(evt) {
     evt.preventDefault()
+    console.log('cart is ', this.props.cart)
+    console.log('user is ', this.props.user)
     let orderInfo = {
       productId: this.props.match.params.productId,
       quantity: evt.target.quantity.value,
       price: this.props.product.price,
-      //currently hard coding order id
-      // orderId: this.orderCheck()
-      orderId: 1
+      orderId: this.props.cart.id
     }
     this.props.orderItemInput(orderInfo)
     evt.target.quantity.value = ''
@@ -79,12 +67,14 @@ class SingleProduct extends Component {
 
 const mapStateToProps = state => ({
   product: state.product.selectedProduct,
-  user: state.user
+  user: state.user,
+  cart: state.cart
 })
 
 const mapDispatchToProps = dispatch => ({
   requestProduct: productId => dispatch(requestProduct(productId)),
-  orderItemInput: orderInfo => dispatch(orderItemInput(orderInfo))
+  orderItemInput: orderInfo => dispatch(orderItemInput(orderInfo)),
+  requestCart: id => dispatch(requestCart(id))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleProduct)

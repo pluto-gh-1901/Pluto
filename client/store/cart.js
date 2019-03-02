@@ -30,6 +30,7 @@ export const orderItemInput = orderInfo => async dispatch => {
 
 export const requestCart = id => async dispatch => {
   try {
+    console.log('request cart called with ', id)
     const res = await axios.post('/api/users/cart', {userId: id})
     dispatch(getCart(res.data))
   } catch (err) {
