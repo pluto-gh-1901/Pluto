@@ -68,7 +68,7 @@ class SingleProduct extends Component {
 const mapStateToProps = state => ({
   product: state.product.selectedProduct,
   user: state.user,
-  cart: state.cart
+  cart: state.cart.order
 })
 
 const mapDispatchToProps = dispatch => ({

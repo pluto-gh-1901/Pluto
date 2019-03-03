@@ -15,19 +15,29 @@ router.get('/', async (req, res, next) => {
 router.post('/cart', async (req, res, next) => {
   try {
     const userId = req.body.userId
-    console.log('USERIDFROM ROUTES:::', userId)
-    let cartItems = await Order.findOne({
-      where: {userId, status: 'cart'}
-      // include: [
-      //   {
-      //     model: OrderItem,
-      //     include: [{model: Product}]
-      //   }
-      //
+    let currentOrder = await Order.findOne({
+      where: {userId, status: 'cart'},
+      include: [{model: Product}]
     })
-    if (!cartItems) {
-      cartItems = await Order.create({userId, status: 'cart'})
+    if (!currentOrder) {
+      currentOrder = await Order.create({userId, status: 'cart'})
     }
+    let orderItems = await OrderItem.findAll({
+      where: {orderId: currentOrder.id}
+    })
+    let order = {currentOrder, orderItems}
+    res.json(order)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.post('/checkout', async (req, res, next) => {
+  try {
+    const orderId = req.body.orderId
+    let cartItems = await OrderItem.findAll({
+      where: {orderId}
+    })
     res.json(cartItems)
   } catch (err) {
     next(err)
