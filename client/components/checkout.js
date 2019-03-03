@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+import {Redirect} from 'react-router-dom'
 import axios from 'axios'
 import {requestOrder, recieveEmptyCart} from '../store/cart'
 
@@ -20,6 +21,7 @@ class Checkout extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      redirect: false,
       address: '',
       email: props.user.email || '',
       cardNumber: props.user.cardNumber || '',
@@ -38,12 +40,27 @@ class Checkout extends Component {
     this.setState({[evt.target.name]: evt.target.value})
   }
 
-  handleSubmit(evt) {
+  async handleSubmit(evt) {
     evt.preventDefault()
 
-    this.props.cart.status = 'processing'
-    // Debugger
+    // After the user clicked submit, only the database need to know which
+    // order is changing to "processing" and the shipping and billing info
+    // since we don't need those info to be displayed elsewhere.
 
+    // Therefore, we want to send the shipping and billing information directly
+    // to the server
+
+    // For security reason, we do not want to keep sensitive information such as
+    // credit card number in the Redux store.
+    await axios.put(`/api/orders/${this.props.cart.id}/checkout`, {
+      email: this.state.email,
+      cardNumber: this.state.cardNumber,
+      legalName: this.state.legalName,
+      shipping: this.state.shipping
+    })
+    this.setState({
+      redirect: true
+    })
     this.props.recieveEmptyCart()
 
     // !!dispatch(recieveEmptyCart())
@@ -53,9 +70,12 @@ class Checkout extends Component {
   }
 
   render() {
+    // The redirect state will change whenever user clicks submit
+    if (this.state.redirect) {
+      return <Redirect to="/products" />
+    }
     const {cart, user} = this.props
     const {email, cardNumber, legalName, shipping} = this.state
-
     return (
       <form onSubmit={this.handleSubmit}>
         <h2>{`You will be paying a total of ${cart.total}`}</h2>
