@@ -11,6 +11,8 @@ router.put('/', async (req, res, next) => {
 
     let orderInfo = {price, quantity, productId, orderId}
 
+    console.log('order info is ', orderInfo)
+
     const oldOrderItem = await OrderItem.findOne({where: {productId}})
     if (oldOrderItem) {
       await OrderItem.update({quantity}, {where: {productId}})

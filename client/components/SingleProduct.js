@@ -1,37 +1,44 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import axios from 'axios'
 
 import {requestProduct} from '../store/product'
-import {orderItemInput, requestCart} from '../store/cart'
-import {runInNewContext} from 'vm'
+import {orderItemInput, requestCart, setTotal} from '../store/cart'
+// import {runInNewContext} from 'vm'
 
 class SingleProduct extends Component {
   constructor(props) {
     super(props)
     this.addToCart = this.addToCart.bind(this)
+    this.setCheckoutTotal = this.setCheckoutTotal.bind(this)
   }
 
   componentDidMount() {
     const productId = this.props.match.params.productId
     this.props.requestProduct(productId)
-    console.log(this.props.user)
     this.props.requestCart(this.props.user.id)
   }
 
   addToCart(evt) {
     evt.preventDefault()
-    console.log('cart is ', this.props.cart)
-    console.log('user is ', this.props.user)
     let orderInfo = {
       productId: this.props.match.params.productId,
       quantity: evt.target.quantity.value,
       price: this.props.product.price,
-      orderId: this.props.cart.id
+      orderId: this.props.cart.currentOrder.id
     }
     this.props.orderItemInput(orderInfo)
+    let total = evt.target.quantity.value * this.props.product.price
+    this.setCheckoutTotal(total)
     evt.target.quantity.value = ''
+  }
+
+  setCheckoutTotal(total) {
+    if (this.props.cart) {
+      let orderId = this.props.cart.currentOrder.id
+      let info = {orderId, total}
+      this.props.setTotal(info)
+    }
   }
 
   displayPrice = price => price / 100
@@ -48,17 +55,16 @@ class SingleProduct extends Component {
             <p>Description: {product.description}</p>
             <p>Price: {this.displayPrice(product.price)}</p>
             <label htmlFor="quantity">Quantity:</label>
-            <input
-              type="text"
-              name="quantity"
-              // value={this.state.quantity}
-              onChange={this.handleChange}
-            />
+            <input type="text" name="quantity" onChange={this.handleChange} />
           </div>
           <Link to="/products">
-            <button>Back</button>
+            <button type="button">Back</button>
           </Link>
-          <button type="submit">Buy</button>
+          {this.props.user.id ? (
+            <button type="submit">Buy</button>
+          ) : (
+            <p>login to purchase</p>
+          )}
         </form>
       </div>
     )
@@ -74,9 +80,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   requestProduct: productId => dispatch(requestProduct(productId)),
   orderItemInput: orderInfo => dispatch(orderItemInput(orderInfo)),
-  requestCart: id => dispatch(requestCart(id))
+  requestCart: id => dispatch(requestCart(id)),
+  setTotal: total => dispatch(setTotal(total))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleProduct)
-
-// export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SingleProduct))

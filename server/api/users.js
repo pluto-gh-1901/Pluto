@@ -43,3 +43,19 @@ router.post('/checkout', async (req, res, next) => {
     next(err)
   }
 })
+
+router.put('/total', async (req, res, next) => {
+  try {
+    const orderId = req.body.orderId
+    const total = req.body.total
+    let currentOrder = await Order.findById(orderId)
+    let newTotal = currentOrder.total + total
+    let newOrderUpdate = await Order.update(
+      {total: newTotal},
+      {where: {id: orderId}}
+    )
+    res.json(newOrderUpdate)
+  } catch (err) {
+    next(err)
+  }
+})
