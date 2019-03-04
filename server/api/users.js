@@ -44,6 +44,23 @@ router.post('/checkout', async (req, res, next) => {
   }
 })
 
+// fetch order with state cart for checkout
+router.get('/:userId/cart', async (req, res, next) => {
+  try {
+    const userId = req.params.userId
+    const order = await Order.findOne({
+      where: {userId, status: 'cart'},
+      include: [
+        {
+          model: OrderItem,
+          include: [{model: Product}]
+        }
+      ]
+    })
+    res.json(order)
+  } catch (err) { next(err) }
+})
+  
 router.put('/total', async (req, res, next) => {
   try {
     const orderId = req.body.orderId

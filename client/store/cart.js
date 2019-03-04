@@ -2,8 +2,10 @@ import axios from 'axios'
 import history from '../history'
 
 const GET_CART = 'GET_CART'
+const SUBMIT_CART = 'SUBMIT_CART'
 const ADD_ORDER_ITEM = 'ADD_ORDER_ITEM'
 const GET_UPDATE = 'GET_UPDATE'
+
 
 const getCart = cart => {
   return {
@@ -12,6 +14,14 @@ const getCart = cart => {
   }
 }
 
+
+const submitCart = order => {
+  return {
+    type: SUBMIT_CART,
+    // user,
+    order}
+}
+  
 const updateCart = update => {
   return {
     type: GET_UPDATE,
@@ -72,5 +82,24 @@ export default function(state = defaultCart, action) {
       return action.update
     default:
       return state
+  }
+}
+
+// fetch order with state cart (for checkout)
+export const requestOrder = id => async dispatch => {
+  try {
+    const res = await axios.get(`/api/users/${id}/cart`)
+    dispatch(getCart(res.data))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+// clear cart
+export const recieveEmptyCart = () => async dispatch => {
+  try {
+    dispatch(getCart({}))
+  } catch (err) {
+    console.error(err)
   }
 }
