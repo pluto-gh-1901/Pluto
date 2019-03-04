@@ -1,11 +1,11 @@
 import axios from 'axios'
 import history from '../history'
+import {runInNewContext} from 'vm'
 
 const GET_CART = 'GET_CART'
 const SUBMIT_CART = 'SUBMIT_CART'
 const ADD_ORDER_ITEM = 'ADD_ORDER_ITEM'
 const GET_UPDATE = 'GET_UPDATE'
-
 
 const getCart = cart => {
   return {
@@ -14,14 +14,14 @@ const getCart = cart => {
   }
 }
 
-
 const submitCart = order => {
   return {
     type: SUBMIT_CART,
     // user,
-    order}
+    order
+  }
 }
-  
+
 const updateCart = update => {
   return {
     type: GET_UPDATE,
@@ -65,8 +65,26 @@ export const requestCheckout = orderId => async dispatch => {
 
 export const setTotal = info => async dispatch => {
   try {
-    let res = await axios.put('/api/users/total', info)
+    let res = await axios.put('/api/users/totalAdd', info)
     dispatch(updateCart(res.data))
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+export const setTotalSub = info => async dispatch => {
+  try {
+    let res = await axios.put('/api/users/totalSub', info)
+    dispatch(updateCart(res.data))
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+export const removeItem = info => async dispatch => {
+  try {
+    console.log('remove item info is ', info)
+    let res = await axios.put('api/orderItem/remove', info)
   } catch (err) {
     console.log(err)
   }
@@ -88,6 +106,7 @@ export default function(state = defaultCart, action) {
 // fetch order with state cart (for checkout)
 export const requestOrder = id => async dispatch => {
   try {
+    console.log('id is ', id)
     const res = await axios.get(`/api/users/${id}/cart`)
     dispatch(getCart(res.data))
   } catch (err) {

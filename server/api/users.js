@@ -58,19 +58,36 @@ router.get('/:userId/cart', async (req, res, next) => {
       ]
     })
     res.json(order)
-  } catch (err) { next(err) }
+  } catch (err) {
+    next(err)
+  }
 })
-  
-router.put('/total', async (req, res, next) => {
+
+router.put('/totalAdd', async (req, res, next) => {
   try {
     const orderId = req.body.orderId
     const total = req.body.total
+    console.log('orderId is ', orderId)
+    console.log('total is ', total)
     let currentOrder = await Order.findById(orderId)
     let newTotal = currentOrder.total + total
     let newOrderUpdate = await Order.update(
       {total: newTotal},
       {where: {id: orderId}}
     )
+    res.json(newOrderUpdate)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.put('/totalSub', async (req, res, next) => {
+  try {
+    const orderId = req.body.orderId
+    const total = req.body.total
+    console.log('orderId is ', orderId)
+    console.log('total is ', total)
+    let newOrderUpdate = await Order.update({total}, {where: {id: orderId}})
     res.json(newOrderUpdate)
   } catch (err) {
     next(err)
