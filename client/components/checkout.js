@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Redirect} from 'react-router-dom'
 import axios from 'axios'
+
 import {requestOrder, recieveEmptyCart} from '../store/cart'
 
 const encriptCardNumber = cardNum => {
@@ -67,6 +68,7 @@ class Checkout extends Component {
     // change state order to processing
     // dispatch empty object: new thunk creator receive {}
     // go to home page
+
   }
 
   render() {
@@ -135,5 +137,6 @@ const mapDispatch = dispatch => ({
   requestOrder: id => dispatch(requestOrder(id)),
   recieveEmptyCart: () => dispatch(recieveEmptyCart())
 })
+
 
 export default connect(mapState, mapDispatch)(Checkout)

@@ -11,7 +11,6 @@ class AllProducts extends Component {
 
   componentDidMount() {
     this.props.requestProducts()
-    console.log(this.props)
   }
 
   render() {

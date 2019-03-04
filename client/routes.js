@@ -34,6 +34,7 @@ class Routes extends Component {
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
+            <Route exact path="/" component={UserHome} />
             <Route path="/home" component={UserHome} />
             <Route path="/cart" component={Cart} />
             <Route path="/checkout" component={Checkout} />
