@@ -16,12 +16,11 @@ install:
 before_script:
   - psql -c 'create database "pluto-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
 
-# before_deploy:
-#   - npm run build-client # make the bundle
-#   - rm -rf node_modules # omit from the tarball, since we skip cleanup
-# deploy:
-#   skip_cleanup: true # prevents travis from deleting the build
-#   provider: heroku
-#   app: YOUR-HEROKU-APP-NAME-HERE # see README
-#   api_key:
-#     secure: YOUR-***ENCRYPTED***-API-KEY-HERE # see README
+before_deploy:
+  - npm run build-client # make the bundle
+  - rm -rf node_modules # omit from the tarball, since we skip cleanup
+deploy:
+  skip_cleanup: true # prevents travis from deleting the build
+  provider: heroku
+  app: pluto-vegetables # see README
+  api_key: LSEXR0rOiBflsUEY0AMqACo3YOgEIGjq4OrKO+mvBe/U7Q0SyzF7YTPAOPy8Q4amZB6ltCg9Bye5cClTtx2+b1hRpX1WPWiJBVQPJtOgl8u9EXroz9F0WAvK73BadcGJsiaOVHAi822bfvY616hFXkBQ0dhLprWTokVHW3bDNk0VuP2KlzzqQFljGnSsuONk+HpTsYJAlfPaQ7TlxQG3G0Lt5+hHoLA6KgbJ5EveeXD+DwTutPOIScdEIuNUWHeUZFV+h9mYtk+xm6RtPM/icuoOLDb8nzdXx0UJKgsbVuJ4k0EYU3NYkOxJ0tCswR7oBCSTIketErZgZXyimHfw7v4PnF9ojSOE9LGnI1eI73j18QWDmJ5wN8FGKInJ4eStqNfBO6J3MUlxhhrvON1VS0XIQa/GZZeETfcBUiBlLsQGq/Y7mR13bPKAKQhbGD2ACQaLZC2Ot3kxwfQxSpxf7jbCpqnqMpbApN30ynkKQKoUe0eguehP6h0IAjJ4Ymmrxk/mCyyrY1CxL8rktAQQYMTH9Gue2dIngwRvMqGoOvooXDum1y709wm/Hpq6KybhtVrTRX24RIZPsVm65Vf3w8ntdp8iy4jPwzYhc6zmIqNuT9vS3lFDBayWp/uG+CMBmIOGqNh4XZnjUrj0lG/KYSCpZ2Ot+/eLUNVXt2JRvQg= # see README
