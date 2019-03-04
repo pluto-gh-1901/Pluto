@@ -1,5 +1,6 @@
 import axios from 'axios'
 import history from '../history'
+import {runInNewContext} from 'vm'
 
 const GET_CART = 'GET_CART'
 const SUBMIT_CART = 'SUBMIT_CART'
@@ -64,8 +65,26 @@ export const requestCheckout = orderId => async dispatch => {
 
 export const setTotal = info => async dispatch => {
   try {
-    let res = await axios.put('/api/users/total', info)
+    let res = await axios.put('/api/users/totalAdd', info)
     dispatch(updateCart(res.data))
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+export const setTotalSub = info => async dispatch => {
+  try {
+    let res = await axios.put('/api/users/totalSub', info)
+    dispatch(updateCart(res.data))
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+export const removeItem = info => async dispatch => {
+  try {
+    console.log('remove item info is ', info)
+    let res = await axios.put('api/orderItem/remove', info)
   } catch (err) {
     console.log(err)
   }

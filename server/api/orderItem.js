@@ -11,8 +11,6 @@ router.put('/', async (req, res, next) => {
 
     let orderInfo = {price, quantity, productId, orderId}
 
-    console.log('order info is ', orderInfo)
-
     const oldOrderItem = await OrderItem.findOne({where: {productId, orderId}})
     if (oldOrderItem) {
       await OrderItem.update({quantity}, {where: {productId}})
@@ -31,6 +29,17 @@ router.get('/:userId', async (req, res, next) => {
     const userId = req.params.userId
     currentOrder = await Order.findOne({where: {userId, status: 'cart'}})
     res.json(currentOrder)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.put('/remove', async (req, res, next) => {
+  try {
+    let orderId = req.body.orderId
+    let productId = req.body.productId
+    await OrderItem.destroy({where: {orderId, productId}})
+    res.status(204).end()
   } catch (err) {
     next(err)
   }
