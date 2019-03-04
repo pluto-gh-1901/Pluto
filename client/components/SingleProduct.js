@@ -56,7 +56,12 @@ class SingleProduct extends Component {
             <p>Description: {product.description}</p>
             <p>Price: {this.displayPrice(product.price)}</p>
             <label htmlFor="quantity">Quantity:</label>
-            <input type="text" name="quantity" onChange={this.handleChange} />
+            <input
+              type="number"
+              name="quantity"
+              onChange={this.handleChange}
+              min="1"
+            />
           </div>
           <Link to="/products">
             <button type="button">Back</button>
