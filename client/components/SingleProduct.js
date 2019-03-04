@@ -21,6 +21,7 @@ class SingleProduct extends Component {
 
   addToCart(evt) {
     evt.preventDefault()
+    console.log(this.props)
     let orderInfo = {
       productId: this.props.match.params.productId,
       quantity: evt.target.quantity.value,
@@ -74,7 +75,7 @@ class SingleProduct extends Component {
 const mapStateToProps = state => ({
   product: state.product.selectedProduct,
   user: state.user,
-  cart: state.cart.order
+  cart: state.cart
 })
 
 const mapDispatchToProps = dispatch => ({

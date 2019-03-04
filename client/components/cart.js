@@ -12,20 +12,21 @@ class Cart extends Component {
   total = 0
 
   getProductInfo(productId) {
-    return this.props.cart.order.currentOrder.products.filter(x => {
+    return this.props.cart.currentOrder.products.filter(x => {
       return x.id === productId
     })
   }
 
   componentDidMount() {
     this.props.requestCart(this.props.id)
+    console.log(this.props)
   }
 
   render() {
     let total = 0
-    let items = this.props.cart.order.orderItems || []
-    if (this.props.cart.order.currentOrder) {
-      total = this.props.cart.order.currentOrder.total
+    let items = this.props.cart.orderItems || []
+    if (this.props.cart.currentOrder) {
+      total = this.props.cart.currentOrder.total
     }
     if (items) {
       return (

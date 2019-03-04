@@ -14,8 +14,8 @@ class Checkout extends Component {
   componentDidMount() {
     console.log('props.cart on checkout ', this.props.cart)
     this.props.requestCart(this.props.id)
-    if (this.props.cart.order.currentOrder) {
-      totalPrice = this.props.cart.order.currentOrder.total / 100
+    if (this.props.cart.currentOrder) {
+      totalPrice = this.props.cart.currentOrder.total / 100
     }
   }
 

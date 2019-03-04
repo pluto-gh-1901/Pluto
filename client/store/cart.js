@@ -2,7 +2,6 @@ import axios from 'axios'
 import history from '../history'
 
 const GET_CART = 'GET_CART'
-const GET_ITEMS = 'GET_ITEMS'
 const ADD_ORDER_ITEM = 'ADD_ORDER_ITEM'
 const GET_UPDATE = 'GET_UPDATE'
 
@@ -10,13 +9,6 @@ const getCart = cart => {
   return {
     type: GET_CART,
     cart
-  }
-}
-
-const getItems = items => {
-  return {
-    type: GET_ITEMS,
-    items
   }
 }
 
@@ -70,16 +62,14 @@ export const setTotal = info => async dispatch => {
   }
 }
 
-const defaultCart = {order: {}, items: []}
+const defaultCart = {}
 
 export default function(state = defaultCart, action) {
   switch (action.type) {
     case GET_CART:
-      return {...state, order: action.cart}
-    case GET_ITEMS:
-      return {...state, items: action.items}
+      return action.cart
     case GET_UPDATE:
-      return {...state, order: action.update}
+      return action.update
     default:
       return state
   }
