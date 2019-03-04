@@ -2,58 +2,65 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import axios from 'axios'
-import {requestCart} from '../store/cart'
+import {requestCart, requestCheckout} from '../store/cart'
 
 class Cart extends Component {
   constructor() {
     super()
+    this.getProductInfo = this.getProductInfo.bind(this)
   }
+  total = 0
+
+  getProductInfo(productId) {
+    return this.props.cart.currentOrder.products.filter(x => {
+      return x.id === productId
+    })
+  }
+
   componentDidMount() {
     this.props.requestCart(this.props.id)
+    console.log(this.props)
   }
-  // handleChange = event => {}
+
   render() {
-    let cart = this.props.cart || {}
-    let items,
-      total = 0
-    if (cart.orderItems) {
-      items = cart.orderItems.map((product, index) => {
-        total += product.product.price * product.product.quantity
-        return (
-          <div key={product.product.id}>
-            <h2>{product.product.name}</h2>
-            <img src={product.product.imageUrl} width="128" height="128" />
-            <p>
-              Quantity:{' '}
-              <input
-                type="number"
-                value={cart.orderItems[index].quantity}
-                onChange={this.handleChange}
-              />
-            </p>
-            <p>Price: {product.product.price}</p>
-            {/* Functionality still needed for Remove button */}
-            <button>Remove</button>
-          </div>
-        )
-      })
+    let total = 0
+    let items = this.props.cart.orderItems || []
+    if (this.props.cart.currentOrder) {
+      total = this.props.cart.currentOrder.total
     }
-    return (
-      <div>
-        <h1> This is your cart </h1>
-        <div id="cartItems">{items}</div>
-        <p>Total: {total}</p>
-        <Link to="/checkout">
-          <button>Checkout</button>
-        </Link>
-      </div>
-    )
+    if (items) {
+      return (
+        <div>
+          <div>
+            {items.map(item => {
+              let product = this.getProductInfo(item.productId)[0]
+              return (
+                <div key={item.productId}>
+                  <h2>{product.name}</h2>
+                  <img src={product.imageUrl} width="128" height="128" />
+                  <p>Quantity: {item.quantity}</p>
+                  <p>Price: {item.price / 100}</p>
+                </div>
+              )
+            })}
+          </div>
+          <div className="total">
+            <h2>Total: ${total / 100}</h2>
+            <Link to="/checkout">
+              <button type="button">Checkout</button>
+            </Link>
+          </div>
+        </div>
+      )
+    } else {
+      return <div>cart is empty, add some veggies to your cart</div>
+    }
   }
 }
 
 const mapDispatch = dispatch => {
   return {
+    requestCheckout: id => dispatch(requestCheckout(id)),
     requestCart: id => dispatch(requestCart(id))
   }
 }

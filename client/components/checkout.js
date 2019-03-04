@@ -2,10 +2,23 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import axios from 'axios'
+import {requestCart} from '../store/cart'
 
-let totalPrice = 20.1
+let totalPrice = 0
 
-export class Checkout extends Component {
+class Checkout extends Component {
+  constructor() {
+    super()
+  }
+
+  componentDidMount() {
+    console.log('props.cart on checkout ', this.props.cart)
+    this.props.requestCart(this.props.id)
+    if (this.props.cart.currentOrder) {
+      totalPrice = this.props.cart.currentOrder.total / 100
+    }
+  }
+
   render() {
     return (
       <form>
@@ -27,3 +40,18 @@ export class Checkout extends Component {
     )
   }
 }
+
+const mapDispatch = dispatch => {
+  return {
+    requestCart: id => dispatch(requestCart(id))
+  }
+}
+
+const mapState = state => {
+  return {
+    id: state.user.id,
+    cart: state.cart
+  }
+}
+
+export default connect(mapState, mapDispatch)(Checkout)

@@ -65,20 +65,20 @@ async function seed() {
     })
   ])
 
-  const order = await Promise.all([
-    Order.create({userId: 1, status: 'delivered'}),
-    Order.create({userId: 1, status: 'cart'})
-  ])
-  const orderitems = await Promise.all([
-    OrderItem.create({orderId: 1, productId: 1, quantity: 1, price: 666}),
-    OrderItem.create({orderId: 2, productId: 1, quantity: 10, price: 666}),
-    OrderItem.create({orderId: 2, productId: 2, quantity: 4, price: 666})
-  ])
+  // const order = await Promise.all([
+  //   Order.create({userId: 1, status: 'delivered'}),
+  //   Order.create({userId: 1, status: 'cart'})
+  // ])
+  // const orderitems = await Promise.all([
+  //   OrderItem.create({orderId: 1, productId: 1, quantity: 1, price: 666}),
+  //   OrderItem.create({orderId: 2, productId: 1, quantity: 10, price: 666}),
+  //   OrderItem.create({orderId: 2, productId: 2, quantity: 4, price: 666})
+  // ])
 
   console.log(`seeded ${users.length} users`)
   console.log(`seeded ${vegetabes.length} vegetabes`)
-  console.log(`seeded ${order.length} order`)
-  console.log(`seeded ${orderitems.length} orderitems`)
+  // console.log(`seeded ${order.length} order`)
+  // console.log(`seeded ${orderitems.length} orderitems`)
   console.log(`seeded successfully`)
 }
 
