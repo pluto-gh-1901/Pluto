@@ -23,7 +23,7 @@ const Product = db.define('product', {
       'http://automation.crouzet.com/wp-content/themes/innovistasensors_wp-theme_crouzet-brands/assets/algolia/img/no-image-available.jpg'
   },
   price: {
-    type: Sequelize.DECIMAL
+    type: Sequelize.INTEGER
   },
   tags: {
     type: Sequelize.ARRAY(Sequelize.STRING)
