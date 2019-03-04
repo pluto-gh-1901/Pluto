@@ -58,9 +58,11 @@ router.get('/:userId/cart', async (req, res, next) => {
       ]
     })
     res.json(order)
-  } catch (err) { next(err) }
+  } catch (err) {
+    next(err)
+  }
 })
-  
+
 router.put('/total', async (req, res, next) => {
   try {
     const orderId = req.body.orderId

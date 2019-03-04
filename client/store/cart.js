@@ -6,7 +6,6 @@ const SUBMIT_CART = 'SUBMIT_CART'
 const ADD_ORDER_ITEM = 'ADD_ORDER_ITEM'
 const GET_UPDATE = 'GET_UPDATE'
 
-
 const getCart = cart => {
   return {
     type: GET_CART,
@@ -14,14 +13,14 @@ const getCart = cart => {
   }
 }
 
-
 const submitCart = order => {
   return {
     type: SUBMIT_CART,
     // user,
-    order}
+    order
+  }
 }
-  
+
 const updateCart = update => {
   return {
     type: GET_UPDATE,
@@ -88,6 +87,7 @@ export default function(state = defaultCart, action) {
 // fetch order with state cart (for checkout)
 export const requestOrder = id => async dispatch => {
   try {
+    console.log('id is ', id)
     const res = await axios.get(`/api/users/${id}/cart`)
     dispatch(getCart(res.data))
   } catch (err) {

@@ -13,7 +13,7 @@ router.put('/', async (req, res, next) => {
 
     console.log('order info is ', orderInfo)
 
-    const oldOrderItem = await OrderItem.findOne({where: {productId}})
+    const oldOrderItem = await OrderItem.findOne({where: {productId, orderId}})
     if (oldOrderItem) {
       await OrderItem.update({quantity}, {where: {productId}})
     } else {

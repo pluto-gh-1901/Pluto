@@ -21,13 +21,14 @@ class SingleProduct extends Component {
 
   addToCart(evt) {
     evt.preventDefault()
-    console.log(this.props)
+    console.log('the props currently on product page', this.props)
     let orderInfo = {
       productId: this.props.match.params.productId,
       quantity: evt.target.quantity.value,
       price: this.props.product.price,
       orderId: this.props.cart.currentOrder.id
     }
+    console.log('order info being sent is ', orderInfo)
     this.props.orderItemInput(orderInfo)
     let total = evt.target.quantity.value * this.props.product.price
     this.setCheckoutTotal(total)
