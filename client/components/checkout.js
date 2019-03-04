@@ -53,7 +53,8 @@ class Checkout extends Component {
 
     // For security reason, we do not want to keep sensitive information such as
     // credit card number in the Redux store.
-    await axios.put(`/api/orders/${this.props.cart.id}/checkout`, {
+    console.log('props', this.props)
+    await axios.put(`/api/orders/${this.props.cart.currentOrder.id}/checkout`, {
       email: this.state.email,
       cardNumber: this.state.cardNumber,
       legalName: this.state.legalName,
@@ -68,7 +69,6 @@ class Checkout extends Component {
     // change state order to processing
     // dispatch empty object: new thunk creator receive {}
     // go to home page
-
   }
 
   render() {
@@ -80,7 +80,8 @@ class Checkout extends Component {
     const {email, cardNumber, legalName, shipping} = this.state
     return (
       <form onSubmit={this.handleSubmit}>
-        <h2>{`You will be paying a total of ${cart.total}`}</h2>
+        <h2>{`You will be paying a total of $${cart.currentOrder.total /
+          100}`}</h2>
         <div>Please enter your address</div>
         <label>
           Shipping information:
@@ -137,6 +138,5 @@ const mapDispatch = dispatch => ({
   requestOrder: id => dispatch(requestOrder(id)),
   recieveEmptyCart: () => dispatch(recieveEmptyCart())
 })
-
 
 export default connect(mapState, mapDispatch)(Checkout)
