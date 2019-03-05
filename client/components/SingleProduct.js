@@ -84,15 +84,16 @@ class SingleProduct extends Component {
     console.log('order info being sent is ', orderInfo)
     this.props.orderItemInput(orderInfo)
     let total = evt.target.quantity.value * this.props.product.price
-    this.setCheckoutTotal(total);
+    this.setCheckoutTotal(total, evt.target.quantity.value);
     this.displayPopUp();
     this.setState({quantity: ''})
   }
 
-  setCheckoutTotal(total) {
+  setCheckoutTotal(total, quantity) {
     if (this.props.cart) {
       let orderId = this.props.cart.currentOrder.id
-      let info = {orderId, total}
+      let item = this.props.match.params.productId
+      let info = {orderId, total, item, quantity}
       this.props.setTotal(info)
     }
   }
@@ -127,8 +128,9 @@ class SingleProduct extends Component {
                   <input
                     className="input"
                     autoFocus
-                    type="text"
+                    type="number"
                     name="quantity"
+                    min="1"
                     value={this.state.quantity}
                     onChange={this.handleChange}
                   />
