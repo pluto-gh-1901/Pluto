@@ -128,8 +128,6 @@ router.put(
     } catch (err) {
       next(err)
     }
-  }
-
 })
 
 router.put('/updateUser', async (req, res, next) => {
