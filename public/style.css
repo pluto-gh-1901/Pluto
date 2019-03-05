@@ -94,3 +94,8 @@ form {
 label {
   padding: 8px;
 }
+
+.loginLink:hover {
+  background-color: #060b49;
+  color: #ffffff;
+}
