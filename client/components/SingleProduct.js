@@ -17,6 +17,7 @@ class SingleProduct extends Component {
     const productId = this.props.match.params.productId
     this.props.requestProduct(productId)
     this.props.requestCart(this.props.user.id)
+    console.log(this.props.location)
   }
 
   addToCart(evt) {
@@ -51,23 +52,40 @@ class SingleProduct extends Component {
     return (
       <div>
         <img src={product.imageUrl} />
-        <form onSubmit={this.addToCart}>
+        <h1>Product: {product.name}</h1>
+        <p>Description: {product.description}</p>
+        <p>Price: {this.displayPrice(product.price)}</p>
+        {this.props.user.id ? (
           <div>
-            <h1>Product: {product.name}</h1>
-            <p>Description: {product.description}</p>
-            <p>Price: {this.displayPrice(product.price)}</p>
-            <label htmlFor="quantity">Quantity:</label>
-            <input type="text" name="quantity" onChange={this.handleChange} />
+            <form onSubmit={this.addToCart}>
+              <div>
+                <label htmlFor="quantity">Quantity:</label>
+                <input
+                  type="text"
+                  name="quantity"
+                  onChange={this.handleChange}
+                />
+              </div>
+              <Link to="/products">
+                <button type="button">Back</button>
+              </Link>
+              <button type="submit">Buy</button>
+            </form>
           </div>
-          <Link to="/products">
-            <button type="button">Back</button>
-          </Link>
-          {this.props.user.id ? (
-            <button type="submit">Buy</button>
-          ) : (
-            <p>login to purchase</p>
-          )}
-        </form>
+        ) : (
+          <div>
+            <Link
+              to="/login"
+              onClick={() => {
+                location.state = this.props.location.pathname
+              }}
+            >
+              <section className="loginLink">
+                <h3>For purchasing items, please click here to log in!</h3>
+              </section>
+            </Link>
+          </div>
+        )}
       </div>
     )
   }
