@@ -1,9 +1,9 @@
 const router = require('express').Router()
 const {Order, OrderItem} = require('../db/models')
-const {isLoggedIn} = require('./utils')
+const {isLoggedIn, isRightUser, hasRightToAccessOrder} = require('./utils')
 module.exports = router
 
-router.put('/', isLoggedIn, async (req, res, next) => {
+router.put('/', isLoggedIn, hasRightToAccessOrder, async (req, res, next) => {
   try {
     const price = Number(req.body.orderInfo.price)
     const quantity = Number(req.body.orderInfo.quantity)
@@ -24,24 +24,28 @@ router.put('/', isLoggedIn, async (req, res, next) => {
   }
 })
 
-router.get('/:userId', isLoggedIn, async (req, res, next) => {
+router.get('/:userId', isLoggedIn, isRightUser, async (req, res, next) => {
   try {
-    let currentOrder
     const userId = req.params.userId
-    currentOrder = await Order.findOne({where: {userId, status: 'cart'}})
+    let currentOrder = await Order.findOne({where: {userId, status: 'cart'}})
     res.json(currentOrder)
   } catch (err) {
     next(err)
   }
 })
 
-router.put('/remove', isLoggedIn, async (req, res, next) => {
-  try {
-    let orderId = req.body.orderId
-    let productId = req.body.productId
-    await OrderItem.destroy({where: {orderId, productId}})
-    res.status(204).end()
-  } catch (err) {
-    next(err)
+router.put(
+  '/remove',
+  isLoggedIn,
+  hasRightToAccessOrder,
+  async (req, res, next) => {
+    try {
+      let orderId = req.body.orderId
+      let productId = req.body.productId
+      await OrderItem.destroy({where: {orderId, productId}})
+      res.status(204).end()
+    } catch (err) {
+      next(err)
+    }
   }
-})
+)

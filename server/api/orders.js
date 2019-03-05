@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const {User, Order} = require('../db/models')
-const {isLoggedIn} = require('./utils')
+const {isLoggedIn, hasRightToAccessOrder} = require('./utils')
 module.exports = router
 
 router.put('/:orderId/checkout', isLoggedIn, async (req, res, next) => {

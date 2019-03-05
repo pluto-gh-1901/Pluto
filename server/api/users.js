@@ -1,6 +1,11 @@
 const router = require('express').Router()
 const {User, Order, OrderItem, Product} = require('../db/models')
-const {isLoggedIn} = require('./utils')
+const {
+  isLoggedIn,
+  isRightUser,
+  hasRightToAccessOrder,
+  isAdmin
+} = require('./utils')
 module.exports = router
 router.get('/', isLoggedIn, async (req, res, next) => {
   try {
@@ -64,23 +69,28 @@ router.get('/:userId/cart', isLoggedIn, async (req, res, next) => {
   }
 })
 
-router.put('/totalAdd', isLoggedIn, async (req, res, next) => {
-  try {
-    const orderId = req.body.orderId
-    const total = req.body.total
-    console.log('orderId is ', orderId)
-    console.log('total is ', total)
-    let currentOrder = await Order.findById(orderId)
-    let newTotal = currentOrder.total + total
-    let newOrderUpdate = await Order.update(
-      {total: newTotal},
-      {where: {id: orderId}}
-    )
-    res.json(newOrderUpdate)
-  } catch (err) {
-    next(err)
+router.put(
+  '/totalAdd',
+  isLoggedIn,
+  hasRightToAccessOrder,
+  async (req, res, next) => {
+    try {
+      const orderId = req.body.orderId
+      const total = req.body.total
+      console.log('orderId is ', orderId)
+      console.log('total is ', total)
+      let currentOrder = await Order.findById(orderId)
+      let newTotal = currentOrder.total + total
+      let newOrderUpdate = await Order.update(
+        {total: newTotal},
+        {where: {id: orderId}}
+      )
+      res.json(newOrderUpdate)
+    } catch (err) {
+      next(err)
+    }
   }
-})
+)
 
 router.put('/totalSub', isLoggedIn, async (req, res, next) => {
   try {
