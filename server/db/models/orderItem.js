@@ -12,7 +12,11 @@ const OrderItem = db.define('orderItem', {
   },
   price: {
     type: Sequelize.INTEGER,
-    allowNull: false
+    allowNull: false,
+    defaultValue: 0,
+    validate: {
+      min: 0
+    }
   }
 })
 

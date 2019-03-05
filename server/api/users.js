@@ -1,8 +1,14 @@
 const router = require('express').Router()
 const {User, Order, OrderItem, Product} = require('../db/models')
+const {
+  isLoggedIn,
+  isRightUser,
+  hasRightToAccessOrder,
+  isAdmin
+} = require('./utils')
 module.exports = router
 
-router.get('/', async (req, res, next) => {
+router.get('/', isAdmin, async (req, res, next) => {
   try {
     const users = await User.findAll({
       attributes: ['id', 'email']
@@ -13,7 +19,7 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.post('/cart', async (req, res, next) => {
+router.post('/cart', isLoggedIn, isRightUser, async (req, res, next) => {
   try {
     const userId = req.body.userId
     let currentOrder = await Order.findOne({
@@ -33,20 +39,25 @@ router.post('/cart', async (req, res, next) => {
   }
 })
 
-router.post('/checkout', async (req, res, next) => {
-  try {
-    const orderId = req.body.orderId
-    let cartItems = await OrderItem.findAll({
-      where: {orderId}
-    })
-    res.json(cartItems)
-  } catch (err) {
-    next(err)
+router.post(
+  '/checkout',
+  isLoggedIn,
+  hasRightToAccessOrder,
+  async (req, res, next) => {
+    try {
+      const orderId = req.body.orderId
+      let cartItems = await OrderItem.findAll({
+        where: {orderId}
+      })
+      res.json(cartItems)
+    } catch (err) {
+      next(err)
+    }
   }
-})
+)
 
 // fetch order with state cart for checkout
-router.get('/:userId/cart', async (req, res, next) => {
+router.get('/:userId/cart', isLoggedIn, isRightUser, async (req, res, next) => {
   try {
     const userId = req.params.userId
     const order = await Order.findOne({
@@ -64,7 +75,8 @@ router.get('/:userId/cart', async (req, res, next) => {
   }
 })
 
-router.put('/updateTotal', async (req, res, next) => {
+router.put('/updateTotal', isLoggedIn,
+  hasRightToAccessOrder, async (req, res, next) => {
   try {
     const orderId = req.body.orderId
     const total = req.body.total
@@ -98,15 +110,23 @@ router.put('/updateTotal', async (req, res, next) => {
   } catch (err) {
     next(err)
   }
-})
+}
+)
 
-router.put('/totalSub', async (req, res, next) => {
-  try {
-    const orderId = req.body.orderId
-    const total = req.body.total
-    let newOrderUpdate = await Order.update({total}, {where: {id: orderId}})
-    res.json(newOrderUpdate)
-  } catch (err) {
-    next(err)
+router.put(
+  '/totalSub',
+  isLoggedIn,
+  hasRightToAccessOrder,
+  async (req, res, next) => {
+    try {
+      const orderId = req.body.orderId
+      const total = req.body.total
+      console.log('orderId is ', orderId)
+      console.log('total is ', total)
+      let newOrderUpdate = await Order.update({total}, {where: {id: orderId}})
+      res.json(newOrderUpdate)
+    } catch (err) {
+      next(err)
+    }
   }
-})
+)

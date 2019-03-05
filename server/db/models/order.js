@@ -8,7 +8,13 @@ const Order = db.define('order', {
       isIn: [['cancelled', 'processing', 'delivered', 'cart']]
     }
   },
-  total: Sequelize.INTEGER
+  total: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0,
+    validate: {
+      min: 0
+    }
+  }
 })
 
 module.exports = Order
