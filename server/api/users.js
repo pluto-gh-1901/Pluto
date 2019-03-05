@@ -128,5 +128,17 @@ router.put(
     } catch (err) {
       next(err)
     }
+})
+
+router.put('/updateUser', async (req, res, next) => {
+  try {
+    const id = req.body.id
+    const legalName = req.body.name
+    const email = req.body.email
+    const shipping = req.body.address
+    const updatedInfo = await User.update({legalName, email, shipping}, {where: {id}, returning: true})
+    res.send(updatedInfo[1][0])
+  } catch (err) {
+    next(err)
   }
-)
+})
