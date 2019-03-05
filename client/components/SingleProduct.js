@@ -4,13 +4,22 @@ import {Link} from 'react-router-dom'
 
 import {requestProduct} from '../store/product'
 import {orderItemInput, requestCart, setTotal} from '../store/cart'
+
+import '../../public/singleProduct.css'
 // import {runInNewContext} from 'vm'
 
 class SingleProduct extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      quantity: '',
+      inputError: false,
+      inputErrorMessage: '',
+      displayPopUp: false
+    }
     this.addToCart = this.addToCart.bind(this)
     this.setCheckoutTotal = this.setCheckoutTotal.bind(this)
+    this.handleChange = this.handleChange.bind(this)
   }
 
   componentDidMount() {
@@ -20,20 +29,64 @@ class SingleProduct extends Component {
     console.log(this.props.location)
   }
 
+  validateIfNumber(input) {
+    if (isNaN(input)) {
+      this.setState({
+        inputError: true,
+        inputErrorMessage: 'Letters are not allowed'
+      })
+      return false
+    } else {
+      return true
+    }
+  }
+
+  validateMaxNumber(input) {
+    if (input > 100) {
+      this.setState({inputError: true, inputErrorMessage: 'Max is 100'})
+    }
+  }
+
+  displayPopUp() {
+    this.setState({displayPopUp: true}, () => {
+      setTimeout(() => {
+        this.setState({displayPopUp: false})
+      }, 800);
+    });
+  }
+
+  handleChange(evt) {
+    if (!this.validateIfNumber(evt.target.value)) {
+      return;
+    } else {
+      this.setState(
+        {
+          [evt.target.name]: evt.target.value,
+          inputError: false,
+          inputErrorMessage: ''
+        },
+        () => {
+          this.validateMaxNumber(this.state.quantity)
+        }
+      )
+    }
+  }
+
   addToCart(evt) {
     evt.preventDefault()
     console.log('the props currently on product page', this.props)
     let orderInfo = {
       productId: this.props.match.params.productId,
-      quantity: evt.target.quantity.value,
+      quantity: this.state.quantity,
       price: this.props.product.price,
       orderId: this.props.cart.currentOrder.id
     }
     console.log('order info being sent is ', orderInfo)
     this.props.orderItemInput(orderInfo)
     let total = evt.target.quantity.value * this.props.product.price
-    this.setCheckoutTotal(total)
-    evt.target.quantity.value = ''
+    this.setCheckoutTotal(total);
+    this.displayPopUp();
+    this.setState({quantity: ''})
   }
 
   setCheckoutTotal(total) {
@@ -50,42 +103,72 @@ class SingleProduct extends Component {
     const {product} = this.props
 
     return (
-      <div>
-        <img src={product.imageUrl} />
-        <h1>Product: {product.name}</h1>
-        <p>Description: {product.description}</p>
-        <p>Price: {this.displayPrice(product.price)}</p>
-        {this.props.user.id ? (
-          <div>
-            <form onSubmit={this.addToCart}>
-              <div>
-                <label htmlFor="quantity">Quantity:</label>
-                <input
-                  type="text"
-                  name="quantity"
-                  onChange={this.handleChange}
-                />
-              </div>
-              <Link to="/products">
-                <button type="button">Back</button>
-              </Link>
-              <button type="submit">Buy</button>
-            </form>
-          </div>
-        ) : (
-          <div>
-            <Link
-              to="/login"
-              onClick={() => {
-                location.state = this.props.location.pathname
-              }}
-            >
-              <section className="loginLink">
-                <h3>For purchasing items, please click here to log in!</h3>
-              </section>
-            </Link>
-          </div>
+      <div className="singleproduct-container">
+        {this.state.displayPopUp && (
+          <div className="popup">Added to cart</div>
         )}
+        <img className="img-single" src={product.imageUrl} />
+        <div>
+          <h1>{product.name}</h1>
+          <p className="description">
+            <strong>Description:</strong> {product.description}
+          </p>
+          <p>
+            <strong>Price:</strong> {this.displayPrice(product.price)}
+            <span> $</span>
+          </p>
+          {this.props.user.id ? (
+            <div>
+              <form className="form-container" onSubmit={this.addToCart}>
+                <div className="quantity">
+                  <label htmlFor="quantity">
+                    <strong>Quantity:</strong>
+                  </label>
+                  <input
+                    className="input"
+                    autoFocus
+                    type="text"
+                    name="quantity"
+                    value={this.state.quantity}
+                    onChange={this.handleChange}
+                  />
+                  {this.state.inputError && (
+                    <div className="err-message">{this.state.inputErrorMessage}</div>
+                  )}
+                </div>
+                <div className="buttons">
+                  {this.props.user.id ? (
+                    <button type="submit"
+                      className={this.state.inputError || !this.state.quantity.length ? "button-add button-disable" : "button-add"}
+                      disabled={this.state.inputError || !this.state.quantity.length}>
+                      Add to cart
+                    </button>
+                  ) : (
+                    <p>login to purchase</p>
+                  )}
+                  <Link to="/products">
+                    <button type="button" className="button-add">
+                      Back to Products
+                    </button>
+                  </Link>
+                </div>
+              </form>
+            </div>
+          ) : (
+            <div>
+              <Link
+                to="/login"
+                onClick={() => {
+                  location.state = this.props.location.pathname
+                }}
+              >
+                <section className="loginLink">
+                  <h3>For purchasing items, please click here to log in!</h3>
+                </section>
+              </Link>
+            </div>
+          )}
+        </div>
       </div>
     )
   }

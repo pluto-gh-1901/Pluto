@@ -1,0 +1,106 @@
+input {
+  outline: none;
+}
+
+.singleproduct-container {
+  position: relative;
+  display: flex;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+.popup {
+  position: absolute;
+  top: 30%;
+  left: 40%;
+  padding: 40px 60px;
+  background-color: #938b9a;
+  /* border: 1px solid #000; */
+  color: rgb(6,11,73);
+  z-index: 10;
+  -webkit-box-shadow: 0px 0px 60px -4px rgba(6,11,73,0.56);
+  -moz-box-shadow: 0px 0px 60px -4px rgba(6,11,73,0.56);
+  box-shadow: 0px 0px 60px -4px rgba(6,11,73,0.56);
+  /* width: 200px;
+  height: 80px; */
+}
+
+.img-single {
+  width: 620px;
+  height: 550px;
+  margin-top: 30px;
+  margin-right: 80px;
+  margin-left: 40px;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+strong {
+  margin-right: 14px;
+}
+
+.description {
+  width: 700px;
+  text-align: justify;
+}
+
+.quantity {
+  display: flex;
+}
+
+.quantity label {
+  padding-left: 0;
+}
+
+.err-message {
+  color: red;
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.input {
+  font-size: 16px;
+}
+
+.buttons {
+  display: flex;
+  text-align: center;
+}
+
+.button-add {
+  background-color: #060b49;
+  border: 1px solid #060b49;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: 'Ubuntu', sans-serif;
+  width: 120px;
+  height: 60px;
+  font-size: 14px;
+  padding: 8px 18px;
+  text-decoration: none;
+  text-transform: uppercase;
+  outline: none;
+  margin: 5px;
+  padding: 0;
+  margin-right: 20px;
+}
+
+.button-add:hover {
+  opacity: 0.75;
+  background-color: #1c259a;
+}
+
+.button-disable {
+  background-color: lightgrey;
+  border: lightgrey;
+}
+
+.button-disable:hover {
+  background-color: lightgrey;
+  border: lightgrey;
+}
