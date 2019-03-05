@@ -6,7 +6,17 @@ utilFunction.isLoggedIn = (req, res, next) => {
     next()
   } else {
     let err = new Error('A client hit a route that requires login') // this error will show up in the server console
-    err.status = 401
+    // err.status = 401
+    res.redirect('/login')
+    next(err)
+  }
+}
+utilFunction.isAdmin = (req, res, next) => {
+  if (req.user.isAdmin) {
+    next()
+  } else {
+    let err = new Error('A client attempted to access an admin route') // this error will show up in the server console
+    // err.status = 403
     res.redirect('/login')
     next(err)
   }
@@ -36,16 +46,6 @@ utilFunction.hasRightToAccessOrder = async (req, res, next) => {
     let err = new Error('User not authorized to request this information') // this error will show up in the server console
     err.status = 401
     res.redirect('/home')
-    next(err)
-  }
-}
-utilFunction.isAdmin = (req, res, next) => {
-  if (req.user.isAdmin) {
-    next()
-  } else {
-    let err = new Error('A client attempted to access an admin route') // this error will show up in the server console
-    err.status = 403
-    res.redirect('/login')
     next(err)
   }
 }
