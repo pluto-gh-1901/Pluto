@@ -110,6 +110,7 @@ router.put('/updateTotal', isLoggedIn,
   } catch (err) {
     next(err)
   }
+}
 )
 
 router.put(
