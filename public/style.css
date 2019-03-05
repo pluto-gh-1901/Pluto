@@ -25,10 +25,6 @@ form div {
   display: inline-block;
 }
 
-.productImg {
-  width: 350px;
-}
-
 /* SPLASH CSS */
 
 html {
@@ -99,3 +95,27 @@ label {
   background-color: #060b49;
   color: #ffffff;
 }
+
+/* AllProductsStyling */
+
+.productImg {
+  width: 20vw;
+}
+
+.allProducts {
+  margin: auto;
+}
+
+.products {
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 20px;
+}
+
+.containerDiv {
+  margin: auto;
+  text-align: center;
+}
+
+
