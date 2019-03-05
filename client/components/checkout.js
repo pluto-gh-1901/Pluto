@@ -5,6 +5,7 @@ import {Redirect} from 'react-router-dom'
 import axios from 'axios'
 
 import {requestOrder, recieveEmptyCart} from '../store/cart'
+import '../../public/checkout.css'
 
 const encriptCardNumber = cardNum => {
   if (cardNum.length < 16) {
@@ -72,6 +73,7 @@ class Checkout extends Component {
   }
 
   render() {
+    // debugger
     // The redirect state will change whenever user clicks submit
     if (this.state.redirect) {
       return <Redirect to="/products" />
@@ -79,51 +81,71 @@ class Checkout extends Component {
     const {cart, user} = this.props
     const {email, cardNumber, legalName, shipping} = this.state
     return (
-      <form onSubmit={this.handleSubmit}>
-        <h2>{`You will be paying a total of $${cart.currentOrder.total /
-          100}`}</h2>
-        <div>Please enter your address</div>
-        <label>
-          Shipping information:
-          <input
-            value={shipping}
-            name="shipping"
-            type="text"
-            onChange={this.handleChange}
-            required
-          />
-        </label>
-        <label>
-          Email address:
-          <input
-            value={email}
-            name="email"
-            type="email"
-            onChange={this.handleChange}
-            required
-          />
-        </label>
-        <label>
-          Card Number:
-          <input
-            value={encriptCardNumber(cardNumber)}
-            name="cardNumber"
-            type="text"
-            onChange={this.handleChange}
-            required
-          />
-        </label>
-        <label>
-          Card Holder:
-          <input
-            value={legalName}
-            name="legalName"
-            type="text"
-            onChange={this.handleChange}
-            required
-          />
-        </label>
-        <button>Submit</button>
+        <form className='form-container' onSubmit={this.handleSubmit}>
+          {(cart.orderItems.length === 1 || !cart.orderItems.length) ? <h2 className='title'>Checkout {cart.orderItems.length} item</h2> : <h2 className='title'>Checkout {cart.orderItems.length} items</h2>}
+          <div className='shipping'>
+            <div className='number'>1</div>
+            <div className='text-30'>Shipping information</div>
+              <div className='text-20'>
+                <label>
+                  Address:
+                  <input
+                    value={shipping}
+                    name="shipping"
+                    type="text"
+                    className='input-checkout'
+                    onChange={this.handleChange}
+                    required
+                  />
+                </label>
+                <label>
+                  Email:
+                  <input
+                    value={email}
+                    name="email"
+                    type="email"
+                    className='input-checkout'
+                    onChange={this.handleChange}
+                    required
+                  />
+                </label>
+            </div>
+          </div>
+          <hr></hr>
+          <div className="payment">
+            <div className='number'>2</div>
+            <div className='text-30'>Payment method</div>
+              <div className='text-20'>
+              <label>
+                Card Number:
+                <input
+                  value={encriptCardNumber(cardNumber)}
+                  name="cardNumber"
+                  type="text"
+                  className='input-checkout'
+                  onChange={this.handleChange}
+                  required
+                />
+              </label>
+              <label>
+                Card Holder:
+                <input
+                  value={legalName}
+                  name="legalName"
+                  type="text"
+                  className='input-checkout'
+                  onChange={this.handleChange}
+                  required
+                />
+              </label>
+            </div>
+          </div>
+          <hr></hr>
+          <div className='total'>
+            <h2>{`Total  $${cart.currentOrder.total /
+                100}`}</h2>
+              <button className={!cart.orderItems.length ? "button-add button-disable" : "button-add"} disabled={!cart.orderItems.length}>Place your order</button>
+          </div>
       </form>
     )
   }
