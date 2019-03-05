@@ -73,18 +73,18 @@ async function seed() {
       inventory: 6,
       price: 499,
       tags: ['fruit']
+    }),
+    Product.create({
+      name: 'Pineapple',
+      imageUrl:
+        'https://www.pngarts.com/files/3/Pineapple-PNG-Image-Background.png',
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam molestie nisl id egestas dignissim. Nullam turpis lorem, malesuada vitae fringilla a, pharetra maximus nibh. Sed id lectus ac mauris venenatis vulputate in nec erat. Pellentesque fringilla, ligula congue tempus molestie, ipsum nisl rhoncus ante, a sagittis sapien urna efficitur lectus. Vestibulum sollicitudin pharetra elit, a bibendum nibh feugiat id. Praesent efficitur, lorem non aliquet varius, tellus velit efficitur massa, et aliquam mi tortor at massa. Integer quis lacus ac risus hendrerit laoreet. Sed eu mauris pellentesque, pulvinar eros nec, viverra nulla. Vestibulum a ultricies ex. Integer bibendum ac enim non aliquet. Pellentesque aliquam ante vitae interdum eleifend.',
+      inventory: 8,
+      price: 699,
+      tags: ['fruit']
     })
   ])
-
-  // const order = await Promise.all([
-  //   Order.create({userId: 1, status: 'delivered'}),
-  //   Order.create({userId: 1, status: 'cart'})
-  // ])
-  // const orderitems = await Promise.all([
-  //   OrderItem.create({orderId: 1, productId: 1, quantity: 1, price: 666}),
-  //   OrderItem.create({orderId: 2, productId: 1, quantity: 10, price: 666}),
-  //   OrderItem.create({orderId: 2, productId: 2, quantity: 4, price: 666})
-  // ])
 
   console.log(`seeded ${users.length} users`)
   console.log(`seeded ${vegetabes.length} vegetabes`)
