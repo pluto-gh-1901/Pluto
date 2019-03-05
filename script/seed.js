@@ -26,7 +26,7 @@ async function seed() {
 
   const vegetabes = await Promise.all([
     Product.create({
-      name: 'broccoli',
+      name: 'Broccoli',
       imageUrl:
         'https://www.producemarketguide.com/sites/default/files/Commodities.tar/Commodities/broccoli_commodity-page.png',
       description:
@@ -36,9 +36,9 @@ async function seed() {
       tags: ['vegetable']
     }),
     Product.create({
-      name: 'carrot',
+      name: 'Carrot',
       imageUrl:
-        'https://cms.splendidtable.org/sites/default/files/styles/w2000/public/ThinkstockPhotos-507126001_0.jpg?itok=_hsOnNh3',
+        'https://purepng.com/public/uploads/large/purepng.com-carrotscarrotvegetablesfreshdeliciousefoodhealthycarrots-481521740717jmglq.png',
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam molestie nisl id egestas dignissim. Nullam turpis lorem, malesuada vitae fringilla a, pharetra maximus nibh. Sed id lectus ac mauris venenatis vulputate in nec erat. Pellentesque fringilla, ligula congue tempus molestie, ipsum nisl rhoncus ante, a sagittis sapien urna efficitur lectus. Vestibulum sollicitudin pharetra elit, a bibendum nibh feugiat id. Praesent efficitur, lorem non aliquet varius, tellus velit efficitur massa, et aliquam mi tortor at massa. Integer quis lacus ac risus hendrerit laoreet. Sed eu mauris pellentesque, pulvinar eros nec, viverra nulla. Vestibulum a ultricies ex. Integer bibendum ac enim non aliquet. Pellentesque aliquam ante vitae interdum eleifend.',
       inventory: 6,
@@ -46,7 +46,7 @@ async function seed() {
       tags: ['vegetable']
     }),
     Product.create({
-      name: 'tomato',
+      name: 'Tomato',
       imageUrl:
         'http://www.petersfruit.com/application/files/6214/4623/8977/featured-vegetables-01.jpg',
       description:
@@ -56,9 +56,8 @@ async function seed() {
       tags: ['berry']
     }),
     Product.create({
-      name: 'strawberries',
-      imageUrl:
-        'https://images.heb.com/is/image/HEBGrocery/article-250/Fruit-and-Vegetable-Sources-2.jpg',
+      name: 'Strawberries',
+      imageUrl: 'http://pngimg.com/uploads/strawberry/strawberry_PNG2601.png',
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam molestie nisl id egestas dignissim. Nullam turpis lorem, malesuada vitae fringilla a, pharetra maximus nibh. Sed id lectus ac mauris venenatis vulputate in nec erat. Pellentesque fringilla, ligula congue tempus molestie, ipsum nisl rhoncus ante, a sagittis sapien urna efficitur lectus. Vestibulum sollicitudin pharetra elit, a bibendum nibh feugiat id. Praesent efficitur, lorem non aliquet varius, tellus velit efficitur massa, et aliquam mi tortor at massa. Integer quis lacus ac risus hendrerit laoreet. Sed eu mauris pellentesque, pulvinar eros nec, viverra nulla. Vestibulum a ultricies ex. Integer bibendum ac enim non aliquet. Pellentesque aliquam ante vitae interdum eleifend.',
       inventory: 23,
@@ -66,7 +65,7 @@ async function seed() {
       tags: ['berry']
     }),
     Product.create({
-      name: 'grapefruit',
+      name: 'Grapefruit',
       imageUrl:
         'https://www.yourlocalfruitshop.com.au/wp-content/uploads/2016/10/grapefruit.jpg',
       description:

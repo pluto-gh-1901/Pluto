@@ -65,7 +65,7 @@ export const requestCheckout = orderId => async dispatch => {
 
 export const setTotal = info => async dispatch => {
   try {
-    let res = await axios.put('/api/users/totalAdd', info)
+    let res = await axios.put('/api/users/updateTotal', info)
     dispatch(updateCart(res.data))
   } catch (err) {
     console.log(err)
