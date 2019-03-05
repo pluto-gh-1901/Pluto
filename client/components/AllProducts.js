@@ -16,21 +16,25 @@ class AllProducts extends Component {
   render() {
     const currentProducts = this.props.products || []
     return currentProducts[0] ? (
-      <div id="allProducts">
-        <h1>All Vegetables</h1>
-        <div className="productNames">
-          {currentProducts.map(product => (
-            <div key={product.id}>
-              <Link to={`/products/${product.id}`}>
-                <h3>{product.name}</h3>
-                <img className="productImg" src={product.imageUrl} />
-              </Link>
-            </div>
-          ))}
+      <div className="containerDiv">
+        <h1>All Produce</h1>
+        <div className="allProducts">
+          <div className="products">
+            {currentProducts.map(product => (
+              <div key={product.id}>
+                <Link to={`/products/${product.id}`}>
+                  <div className="productName">
+                    <h3>{product.name}</h3>
+                  </div>
+                  <img className="productImg" src={product.imageUrl} />
+                </Link>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     ) : (
-      <p>There are no current vegetables in the database</p>
+      <p>There is currently no produce in the database</p>
     )
   }
 }

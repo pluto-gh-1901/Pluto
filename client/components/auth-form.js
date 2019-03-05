@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
+import {Redirect} from 'react-router-dom'
 
 /**
  * COMPONENT
@@ -10,33 +11,34 @@ const AuthForm = props => {
   const {name, displayName, handleSubmit, error} = props
 
   return (
-    <div className="welcomeContainer">
-      <div className="subComp">
-        <form onSubmit={handleSubmit} name={name}>
-          <div className="formEl">
-            <label htmlFor="email">
-              <small>Email</small>
-            </label>
-            <input name="email" type="text" />
-          </div>
-          <div className="formEl">
-            <label htmlFor="password">
-              <small>Password</small>
-            </label>
-            <input name="password" type="password" />
-          </div>
-          <div>
-            <button className="loginB" type="submit">
-              {displayName} with email
-            </button>
-          </div>
-          {error && error.response && <div> {error.response.data} </div>}
-        </form>
-        <button type="button" className="loginB" href="/auth/google">
-          {displayName} with Google
-        </button>
-      </div>
+    props.user.id ? (<Redirect to="/home" />) : (<div className="welcomeContainer">
+    <div className="subComp">
+      <form onSubmit={handleSubmit} name={name}>
+        <div className="formEl">
+          <label htmlFor="email">
+            <small>Email</small>
+          </label>
+          <input name="email" type="text" />
+        </div>
+        <div className="formEl">
+          <label htmlFor="password">
+            <small>Password</small>
+          </label>
+          <input name="password" type="password" />
+        </div>
+        <div>
+          <button className="loginB" type="submit">
+            {displayName} with email
+          </button>
+        </div>
+        {error && error.response && <div> {error.response.data} </div>}
+      </form>
+      <button type="button" className="loginB" href="/auth/google">
+        {displayName} with Google
+      </button>
     </div>
+  </div>)
+
   )
 }
 
@@ -51,7 +53,8 @@ const mapLogin = state => {
   return {
     name: 'login',
     displayName: 'Login',
-    error: state.user.error
+    error: state.user.error,
+    user: state.user
   }
 }
 
@@ -59,7 +62,8 @@ const mapSignup = state => {
   return {
     name: 'signup',
     displayName: 'Sign Up',
-    error: state.user.error
+    error: state.user.error,
+    user: state.user
   }
 }
 
@@ -71,6 +75,7 @@ const mapDispatch = dispatch => {
       const email = evt.target.email.value
       const password = evt.target.password.value
       dispatch(auth(email, password, formName))
+
     }
   }
 }

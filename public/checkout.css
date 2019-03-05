@@ -1,0 +1,65 @@
+input {
+  outline: none;
+}
+
+.form-container {
+  display: flex;
+  align-items: flex-start;
+  margin-left: 25%;
+  width: 50%;
+  margin-top: 30px;
+}
+
+.number {
+  margin: 0;
+  margin-right: 20px;
+  font-size: 30px;
+}
+
+hr {
+  background-color: #938b9a;
+  border-style: solid;
+  border-width: 1px;
+  width: 100%;
+  opacity: 0.7;
+  margin-bottom: 40px;
+}
+
+.title {
+  margin-bottom: 80px;
+  font-size: 40px;
+}
+
+.shipping {
+  display: flex;
+}
+
+.text-30 {
+  font-size: 30px;
+  width: 400px;
+}
+
+.text-20 {
+  font-size: 20px;
+}
+
+.input-checkout {
+  margin-left: 10px;
+  width: 200px;
+  font-size: 20px;
+}
+
+.payment {
+  display: flex;
+}
+
+.total {
+  display: flex;
+  font-size: 30px;
+  text-align: justify;
+  align-items: center;
+}
+
+.total h2 {
+  margin-right: 200px;
+}
