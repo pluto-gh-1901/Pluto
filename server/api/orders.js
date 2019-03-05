@@ -1,8 +1,9 @@
 const router = require('express').Router()
-const {User, Order, OrderItem, Product} = require('../db/models')
+const {User, Order} = require('../db/models')
+const {isLoggedIn} = require('./utils')
 module.exports = router
 
-router.put('/:orderId/checkout', async (req, res, next) => {
+router.put('/:orderId/checkout', isLoggedIn, async (req, res, next) => {
   try {
     const orderId = req.params.orderId
     const data = await Order.findById(orderId)

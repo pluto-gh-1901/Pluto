@@ -1,8 +1,9 @@
 const router = require('express').Router()
-const {User, Order, OrderItem, Product} = require('../db/models')
+const {Order, OrderItem} = require('../db/models')
+const {isLoggedIn} = require('./utils')
 module.exports = router
 
-router.put('/', async (req, res, next) => {
+router.put('/', isLoggedIn, async (req, res, next) => {
   try {
     const price = Number(req.body.orderInfo.price)
     const quantity = Number(req.body.orderInfo.quantity)
@@ -23,7 +24,7 @@ router.put('/', async (req, res, next) => {
   }
 })
 
-router.get('/:userId', async (req, res, next) => {
+router.get('/:userId', isLoggedIn, async (req, res, next) => {
   try {
     let currentOrder
     const userId = req.params.userId
@@ -34,7 +35,7 @@ router.get('/:userId', async (req, res, next) => {
   }
 })
 
-router.put('/remove', async (req, res, next) => {
+router.put('/remove', isLoggedIn, async (req, res, next) => {
   try {
     let orderId = req.body.orderId
     let productId = req.body.productId
