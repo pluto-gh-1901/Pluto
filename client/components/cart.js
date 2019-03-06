@@ -7,7 +7,9 @@ import {
   requestCheckout,
   removeItem,
   setTotalSub
-} from '../store/cart'
+} from '../store/cart';
+
+import '../../public/cart.css'
 
 class Cart extends Component {
   constructor() {
@@ -48,32 +50,34 @@ class Cart extends Component {
     }
     if (items) {
       return (
-        <div>
-          <div>
+        <div className='cart-component-all'>
+          <div className='product-info'>
             {items.map(item => {
               let product = this.getProductInfo(item.productId)[0]
               return (
-                <div key={item.productId}>
-                  <h2>{product.name}</h2>
-                  <img src={product.imageUrl} width="128" height="128" />
-                  <p>Quantity: {item.quantity}</p>
-                  <p>Price: {item.price / 100}</p>
-                  <button
-                    type="button"
-                    onClick={() =>
-                      this.deleteItem(item.productId, item.quantity, item.price)
-                    }
-                  >
-                    remove
-                  </button>
+                <div className='product-item' key={item.productId}>
+                  <img className='img-cart' src={product.imageUrl} width="128" height="128" />
+                  <div>
+                    <h2>{product.name}</h2>
+                    <p>Quantity: {item.quantity}</p>
+                    <p>Price: $ {item.price / 100}</p>
+                    <button className='remove-button'
+                      type="button"
+                      onClick={() =>
+                        this.deleteItem(item.productId, item.quantity, item.price)
+                      }
+                    >
+                      remove
+                    </button>
+                  </div>
                 </div>
               )
             })}
           </div>
-          <div className="total">
+          <div className="total-cart">
             <h2>Total: ${total / 100}</h2>
             <Link to="/checkout">
-              <button type="button">Checkout</button>
+              <button className={total === 0 ? 'button-add button-disable' : 'button-add'} type="button" disabled={total === 0}>Checkout</button>
             </Link>
           </div>
         </div>

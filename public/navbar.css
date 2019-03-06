@@ -17,6 +17,7 @@ a {
 .container {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   background-color: #060b49;
   color: #fff;
   height: 80px;
@@ -31,6 +32,7 @@ a {
   align-items: center;
   justify-content: center;
   min-height: 70px;
+  margin-right: 2%;
 }
 
 .navbar {
@@ -40,7 +42,7 @@ a {
   font: 14px;
   padding-right: 10px;
   padding-left: 10px;
-  width: 100px;
+  width: 130px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -51,7 +53,6 @@ a {
   font-family: 'Ubuntu', sans-serif;
   font: 20px;
   cursor: pointer;
-  width: 78%;
   padding-left: 2%;
 }
 
