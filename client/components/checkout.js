@@ -65,16 +65,9 @@ class Checkout extends Component {
       redirect: true
     })
     this.props.recieveEmptyCart()
-
-    // !!dispatch(recieveEmptyCart())
-    // change state order to processing
-    // dispatch empty object: new thunk creator receive {}
-    // go to home page
   }
 
   render() {
-    // debugger
-    // The redirect state will change whenever user clicks submit
     if (this.state.redirect) {
       return <Redirect to="/products" />
     }

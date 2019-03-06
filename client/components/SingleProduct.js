@@ -115,12 +115,12 @@ class SingleProduct extends Component {
             <strong>Description:</strong> {product.description}
           </p>
           <p>
-            <strong>Price:</strong> {this.displayPrice(product.price)}
-            <span> $</span>
+            <strong>Price:</strong> <span>$ </span>{this.displayPrice(product.price)}
+
           </p>
           {this.props.user.id ? (
             <div>
-              <form className="form-container" onSubmit={this.addToCart}>
+              <form className="form-container-product" onSubmit={this.addToCart}>
                 <div className="quantity">
                   <label htmlFor="quantity">
                     <strong>Quantity:</strong>
@@ -128,7 +128,7 @@ class SingleProduct extends Component {
                   <input
                     className="input"
                     autoFocus
-                    type="number"
+                    type="text"
                     name="quantity"
                     min="1"
                     value={this.state.quantity}
@@ -158,15 +158,14 @@ class SingleProduct extends Component {
             </div>
           ) : (
             <div>
+              <h3>For purchasing items, please click to log in!</h3>
               <Link
                 to="/login"
                 onClick={() => {
                   location.state = this.props.location.pathname
                 }}
               >
-                <section className="loginLink">
-                  <h3>For purchasing items, please click here to log in!</h3>
-                </section>
+                <button className="button-add">Login page</button>
               </Link>
             </div>
           )}

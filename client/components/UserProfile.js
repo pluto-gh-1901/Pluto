@@ -13,7 +13,7 @@ class UserProfile extends Component {
     }
     this.handleSubmit = this.handleSubmit.bind(this)
   }
-  
+
   handleSubmit (evt) {
     evt.preventDefault();
     const name = evt.target.name.value
@@ -22,7 +22,7 @@ class UserProfile extends Component {
     const id = this.props.user.id
     this.props.requestEdit(id, name, email, address)
   }
-  
+
   enableInputs() {
     const inputs = Array.from(document.getElementsByTagName('input'))
     inputs.forEach(input => input.removeAttribute('disabled'))
@@ -42,7 +42,7 @@ class UserProfile extends Component {
               <button type="submit">Save Info</button>
             </div>
             <label>
-              Legal Name:
+              Your Name:
             </label>
               <div>
                 <input
