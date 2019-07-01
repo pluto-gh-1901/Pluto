@@ -1,10 +1,20 @@
-# Boilermaker
+# Pluto-vegetables
 
-_Good things come in pairs_
+### E-Commerce site created based on Boilermaker, Group Project
 
-Looking to mix up a backend with express/sequelize and a frontend with react/redux? That's `boilermaker`!
+* Built a fully deployed e-commerce site, where user can login and purchase items
+* Implemented intuitive user experience with React, Redux, React-Redux and Webpack
+* Created All products, Single Product, Cart and Checkout Pages
+* Developed custom form fields validation
 
-Follow along with the workshop to make your own! This canonical version can serve as a reference, or a starting point all on its own.
+<img width="1668" alt="Screen Shot 2019-07-01 at 12 50 59 PM" src="https://user-images.githubusercontent.com/33212103/60453485-4cdc9100-9bff-11e9-8e09-234e6fcc4a6b.png">
+
+**Visit the site here**: https://pluto-vegetables.herokuapp.com/
+
+### Technology
+
+Javascript, HTML5, CSS3, React, Redux, React/Redux, Sequelize, Posgress, Express, Passport, Socket.io, Lodash, Enzyme, Chai, Mocha, Node.js
+
 
 ## Setup
 
