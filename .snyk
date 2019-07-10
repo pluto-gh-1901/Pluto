@@ -12,3 +12,31 @@ patch:
         patched: '2019-07-04T14:23:27.736Z'
     - sequelize > lodash:
         patched: '2019-07-04T14:23:27.736Z'
+    - snyk > snyk-nodejs-lockfile-parser > lodash:
+        patched: '2019-07-10T15:26:19.022Z'
+    - snyk > lodash:
+        patched: '2019-07-10T15:26:19.022Z'
+    - sequelize > lodash:
+        patched: '2019-07-10T15:26:19.022Z'
+    - react-redux > lodash:
+        patched: '2019-07-10T15:26:19.022Z'
+    - snyk > inquirer > lodash:
+        patched: '2019-07-10T15:26:19.022Z'
+    - snyk > snyk-config > lodash:
+        patched: '2019-07-10T15:26:19.022Z'
+    - snyk > snyk-mvn-plugin > lodash:
+        patched: '2019-07-10T15:26:19.022Z'
+    - redux > lodash:
+        patched: '2019-07-10T15:26:19.022Z'
+    - snyk > snyk-nuget-plugin > lodash:
+        patched: '2019-07-10T15:26:19.022Z'
+    - snyk > @snyk/dep-graph > lodash:
+        patched: '2019-07-10T15:26:19.022Z'
+    - snyk > snyk-go-plugin > graphlib > lodash:
+        patched: '2019-07-10T15:26:19.022Z'
+    - snyk > snyk-nodejs-lockfile-parser > graphlib > lodash:
+        patched: '2019-07-10T15:26:19.022Z'
+    - snyk > @snyk/dep-graph > graphlib > lodash:
+        patched: '2019-07-10T15:26:19.022Z'
+    - snyk > snyk-php-plugin > @snyk/composer-lockfile-parser > lodash:
+        patched: '2019-07-10T15:26:19.022Z'

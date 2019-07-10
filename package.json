@@ -43,7 +43,7 @@
     "express": "^4.16.3",
     "express-session": "^1.15.1",
     "history": "^4.6.3",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.12",
     "morgan": "^1.9.1",
     "passport": "^0.3.2",
     "passport-google-oauth": "^1.0.0",
@@ -60,7 +60,7 @@
     "redux-thunk": "^2.3.0",
     "sequelize": "^5.8.11",
     "socket.io": "^2.1.1",
-    "snyk": "^1.192.0"
+    "snyk": "^1.192.4"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",
