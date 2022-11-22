@@ -59,7 +59,7 @@
     "redux-logger": "^2.8.1",
     "redux-thunk": "^2.3.0",
     "sequelize": "^5.8.11",
-    "socket.io": "^2.1.1",
+    "socket.io": "^2.5.0",
     "snyk": "^1.192.4"
   },
   "devDependencies": {
