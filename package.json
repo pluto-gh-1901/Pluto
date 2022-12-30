@@ -79,9 +79,9 @@
     "@babel/register": "^7.0.0-beta.55",
     "axios-mock-adapter": "^1.15.0",
     "babel-eslint": "^8.2.6",
-    "babel-loader": "^8.0.0-beta.4",
+    "babel-loader": "^8.3.0",
     "chai": "^3.5.0",
-    "css-loader": "^2.1.0",
+    "css-loader": "^6.7.3",
     "enzyme": "^3.0.0",
     "enzyme-adapter-react-16": "^1.0.0",
     "eslint": "^4.19.1",
@@ -98,10 +98,10 @@
     "react-test-renderer": "^16.4.2",
     "redux-devtools-extension": "^2.13.5",
     "redux-mock-store": "^1.5.3",
-    "style-loader": "^0.23.1",
+    "style-loader": "^3.3.1",
     "supertest": "^3.1.0",
-    "webpack": "^4.16.4",
-    "webpack-cli": "^3.1.0"
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
   },
   "snyk": true
 }
